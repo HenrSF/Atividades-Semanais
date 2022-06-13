@@ -3,6 +3,8 @@
 using namespace std;
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 class SensorTemperatura{
     public:
