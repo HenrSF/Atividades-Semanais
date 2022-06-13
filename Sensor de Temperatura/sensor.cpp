@@ -19,15 +19,21 @@ void SensorTemperatura::desligar()
 }
 
 void SensorTemperatura::setunidade(int u)
-
 {
     
 }
 
 void SensorTemperatura::setdefeito(int d)
-
 {
-
+    srand(time(NULL));
+    rand()%101;
+    if (d < 5)
+    {
+        defeito = true;
+        cerr << "O sensor apresenta problemas.";
+        exit(EXIT_FAILURE);
+    }
+    
 }
 
 /*static*/float SensorTemperatura::CelsiusToFahrenheit()
