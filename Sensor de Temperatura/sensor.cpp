@@ -16,7 +16,7 @@ SensorTemperatura::SensorTemperatura(int u)
         break;
 
     default:
-        setunidade(3);
+        setunidade(u);
         break;
     }
 }
@@ -40,48 +40,106 @@ void SensorTemperatura::setunidade(int u)
 
 void SensorTemperatura::setdefeito(int d)
 {
-    srand(time(NULL));
-    rand()%100 + 1;
     if (d < 5)
     {
         defeito = true;
         cerr << "O sensor apresenta problemas.";
         exit(EXIT_FAILURE);
     }
-    
+
+    else defeito = false;
 }
 
-/*static*/float SensorTemperatura::CelsiusToFahrenheit()
+float SensorTemperatura::convert_corrente()
+{
+    switch (getunidade())
+    {
+    case 1:
+        return ((((getcorrente_saida() - 4) * 100) / 16) + 273);    //Fórmula para retornar a corrente em Kelvin;
+        break;
+    
+    case 2:
+        return ((((getcorrente_saida() - 4) * 180) / 16) + 32);     //Fórmula para retornar a corrente em graus Fahrenheit;
+        break;
+
+    default:
+        return (((getcorrente_saida() - 4) * 100) / 16);            //Fórmula para retornar a corrente em graus Celsius;
+        break;
+    }
+}
+//Métodos get;
+bool SensorTemperatura::getligado()
+{
+    return ligado;
+}
+
+int SensorTemperatura::getn_sensores()
+{
+    return n_sensores;
+}
+
+int SensorTemperatura::getdefeito()
+{
+    return defeito;
+}
+
+int SensorTemperatura::getunidade()
+{
+    return unidade;
+}
+
+float SensorTemperatura::getcorrente_saida()
+{
+    return corrente_saida;
+}
+
+float SensorTemperatura::efetuaMedicao()
+{
+    srand(time(NULL));
+
+    setdefeito(rand() % 100 + 1);
+
+    if (getdefeito() == false)
+    {
+
+        convert_corrente(LOW + rand() * (HIGH - LOW) / RAND_MAX);
+    }
+    
+    else exit(EXIT_FAILURE);
+}
+
+//Métodos static;
+float SensorTemperatura::CelsiusToFahrenheit()
 
 {
     F = (1.8*C) + 32;
 }
 
-/*static*/float SensorTemperatura::CelsiusToKelvin()
+float SensorTemperatura::CelsiusToKelvin()
 
 {
     K = C + 273;
 }
 
-/*static*/float SensorTemperatura::KelvinToCelsius()
+float SensorTemperatura::KelvinToCelsius()
 
 {
     C = K - 273;
 }
 
-/*static*/float SensorTemperatura::KelvinToFahrenheit()
+float SensorTemperatura::KelvinToFahrenheit()
 
 {
     F = ((K - 273)*1.8) + 32;
 }
 
-/*static*/float SensorTemperatura::FahrenheitToCelsius()
+float SensorTemperatura::FahrenheitToCelsius()
 
 {
     F = (F - 32)/1.8;
 }
 
-/*static*/float SensorTemperatura::FahrenheitToKelvin()
+float SensorTemperatura::FahrenheitToKelvin()
 
 {
     K = ((F-32)*(5/9)) + 273;

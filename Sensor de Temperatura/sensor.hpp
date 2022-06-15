@@ -3,7 +3,10 @@
 
 //using std::cout, std::fixed(2), std::setprecision(2)
 
-using namespace std:
+using namespace std;
+
+#define LOW = 4.00           //Intervalo da corrente para gerar valores aleatórios;
+#define HIGH = 20.00
 
 #include <iostream>
 #include <string>
@@ -17,13 +20,16 @@ class SensorTemperatura
 
     //Atributos;
     bool ligado = true;
-    static int n_sensores;
+    bool defeito = true;
     
-    int corrente_saida;
-    int defeito, unidade;
+    static int n_sensores;
 
-    static float corrente_saida(); //.
+    float corrente_saida;
+    int unidade;
 
+    float
+    float convert_corrente(); //Função que retorna a temperatura de acordo com a corrente;
+    
     public:
 
     SensorTemperatura (int unidade); //contrutor
@@ -35,23 +41,22 @@ class SensorTemperatura
     //Métodos get;
     bool getligado();
     int getn_sensores();
-    int getcorrente_saida();
     int getdefeito();
     int getunidade();
-
+    float getcorrente_saida();
     
     void imprimir();        //imprime o estado do objeto
     void ligar();           //liga o sensor
     void desligar();        //desliga o sensor
     
-    static void CelsiusToKelvin();
-    static void CelsiusToFahrenheit();
+    static float CelsiusToKelvin();
+    static float CelsiusToFahrenheit();
 
-    static void KelvinToCelsius();
-    static void KelvinToFahrenheit();
+    static float KelvinToCelsius();
+    static float KelvinToFahrenheit();
     
-    static void FahrenheitToCelsius();
-    static void FahrenheitToKelvin();
+    static float FahrenheitToCelsius();
+    static float FahrenheitToKelvin();
     
     float efetuaMedicao();  //medicao feita pelo sensor
 };
