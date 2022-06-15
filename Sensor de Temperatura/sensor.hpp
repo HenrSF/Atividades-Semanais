@@ -1,44 +1,59 @@
 #ifndef CLASSE_SENSOR_
 #define CLASSE_SENSOR_
-using namespace std;
+
+//using std::cout, std::fixed(2), std::setprecision(2)
+
+using namespace std:
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
-class SensorTemperatura{
-    public:
-    SensorTemperatura (); //contrutor
-    
-    void setunidade(int);
-    void setdefeito(int);
-    
-    int getn_sensores();
-    int getcorrente_saida();
-    
-    void imprimir();    //imprime o estado do obj
-    void ligar();       //liga o sensor
-    void desligar();    //desliga o sensor
-    
-    static float CelsiusToKelvin();
-    static float CelsiusToFahrenheit();
-
-    static float KelvinToCelsius();
-    static float KelvinToFahrenheit();
-    
-    static float FahrenheitToCelsius();
-    static float FahrenheitToKelvin();
-    
-    int efetuaMedicao(); //medicao feita pelo sensor
-
+class SensorTemperatura
+{
     private:
-    static int corrente_saida();
+
+    //Atributos;
     bool ligado = true;
     static int n_sensores;
     
     int corrente_saida;
     int defeito, unidade;
 
+    static float corrente_saida(); //.
+
+    public:
+
+    SensorTemperatura (int unidade); //contrutor
+
+    //Métodos set;
+    void setunidade(int unidade);
+    void setdefeito(int defeito);
+    
+    //Métodos get;
+    bool getligado();
+    int getn_sensores();
+    int getcorrente_saida();
+    int getdefeito();
+    int getunidade();
+
+    
+    void imprimir();        //imprime o estado do objeto
+    void ligar();           //liga o sensor
+    void desligar();        //desliga o sensor
+    
+    static void CelsiusToKelvin();
+    static void CelsiusToFahrenheit();
+
+    static void KelvinToCelsius();
+    static void KelvinToFahrenheit();
+    
+    static void FahrenheitToCelsius();
+    static void FahrenheitToKelvin();
+    
+    float efetuaMedicao();  //medicao feita pelo sensor
 };
 
 #endif

@@ -1,9 +1,24 @@
 #include "sensor.hpp"
 
-SensorTemperatura::SensorTemperatura(){
-    //falta a unidade de medicao que o construtor recebera
+SensorTemperatura::SensorTemperatura(int u)
+{
     ligado = false;
     defeito = false;
+
+    switch (u)                                  //Kelvin = 1 ; Fahrenheit = 2 ; Celsius = 3;
+    {
+    case 1:
+        setunidade(1);
+        break;
+    
+    case 2:
+        setunidade(2);
+        break;
+
+    default:
+        setunidade(3);
+        break;
+    }
 }
 
 void SensorTemperatura::ligar()
@@ -20,13 +35,13 @@ void SensorTemperatura::desligar()
 
 void SensorTemperatura::setunidade(int u)
 {
-    
+    unidade = u;
 }
 
 void SensorTemperatura::setdefeito(int d)
 {
     srand(time(NULL));
-    rand()%101;
+    rand()%100 + 1;
     if (d < 5)
     {
         defeito = true;
