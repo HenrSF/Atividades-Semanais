@@ -1,10 +1,6 @@
 #ifndef CLASSE_SENSOR_
 #define CLASSE_SENSOR_
 
-//using std::cout, std::fixed(2), std::setprecision(2)
-
-using namespace std;
-
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -13,6 +9,8 @@ using namespace std;
 
 #define low 4                   //Parâmetros do intervalo da corrente;
 #define high 20
+
+using namespace std;
 
 class SensorTemperatura
 {
@@ -27,12 +25,14 @@ class SensorTemperatura
     float corrente_saida;
     int unidade;
 
-    float convert_corrente(); //Função que retorna a temperatura de acordo com a corrente;
+    string unidade_engenharia;
+
+    float convert_corrente(); //Métoro auxiliar que retorna a temperatura de acordo com a corrente;
     
     public:
 
     SensorTemperatura (int unidade); //Constructor;
-    ~SensorTemperatura ();          //Destructor;
+    ~SensorTemperatura ();           //Destructor;
 
     //Métodos set;
     void setunidade(int unidade);
@@ -44,20 +44,23 @@ class SensorTemperatura
     int getdefeito();
     int getunidade();
     float getcorrente_saida();
-    
+    string getunidade_engenharia();
+
     void imprimir();        //imprime o estado do objeto
     void ligar();           //liga o sensor
     void desligar();        //desliga o sensor
     
-    static float CelsiusToKelvin();
-    static float CelsiusToFahrenheit();
+    //Métodos static que recebe um valor em uma unidade e coverte para outra 
+    static float CelsiusToKelvin(float Celsius);
+    static float CelsiusToFahrenheit(float Celsius);
 
-    static float KelvinToCelsius();
-    static float KelvinToFahrenheit();
+    static float KelvinToCelsius(float kelvin);
+    static float KelvinToFahrenheit(float kelvin);
     
-    static float FahrenheitToCelsius();
-    static float FahrenheitToKelvin();
-    
+    static float FahrenheitToCelsius(float Fahrenheit);
+    static float FahrenheitToKelvin(float Fahrenheit);
+    //Nessa parte de static não ficou claro se era para receber um valor definido na main,
+    //ou se era utilizando o valor da corrente do sensor; 
     float efetuaMedicao();  //medicao feita pelo sensor
 };
 

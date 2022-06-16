@@ -5,27 +5,14 @@ SensorTemperatura::SensorTemperatura(int u)
     ligado = false;
     defeito = false;
 
-    switch (u)                                  //Kelvin = 1 ; Fahrenheit = 2 ; Celsius = 3;
-    {
-    case 1:
-        setunidade(1);
-        break;
-    
-    case 2:
-        setunidade(2);
-        break;
-
-    default:
-        setunidade(u);
-        break;
-    }
+    setunidade(u);
 
     n_sensores++;
 }
 
 SensorTemperatura::~SensorTemperatura()
 {
-
+    n_sensores--;
 }
 
 void SensorTemperatura::ligar()
@@ -40,6 +27,7 @@ void SensorTemperatura::desligar()
     ligado = false;
 }
 
+//Métodos set;
 void SensorTemperatura::setunidade(int u)
 {
     unidade = u;
@@ -57,23 +45,27 @@ void SensorTemperatura::setdefeito(int d)
     else defeito = false;
 }
 
-float SensorTemperatura::convert_corrente()
+float SensorTemperatura::convert_corrente() //Converter a corrente para uma unidade de temperatura;
 {
-    switch (getunidade())
+    switch (getunidade())                                           //Kelvin = 1 ; Fahrenheit = 2 ; Celsius = else;
     {
     case 1:
+        unidade_engenharia = "K";
         return ((((getcorrente_saida() - 4) * 100) / 16) + 273);    //Fórmula para retornar a corrente em Kelvin;
         break;
     
     case 2:
+        unidade_engenharia = "º F";
         return ((((getcorrente_saida() - 4) * 180) / 16) + 32);     //Fórmula para retornar a corrente em graus Fahrenheit;
         break;
 
     default:
+        unidade_engenharia = "º C";
         return (((getcorrente_saida() - 4) * 100) / 16);            //Fórmula para retornar a corrente em graus Celsius;
         break;
     }
 }
+
 //Métodos get;
 bool SensorTemperatura::getligado()
 {
@@ -94,6 +86,10 @@ int SensorTemperatura::getunidade()
 {
     return unidade;
 }
+string SensorTemperatura::getunidade_engenharia()
+{
+    return unidade_engenharia;
+}
 
 float SensorTemperatura::getcorrente_saida()
 {
@@ -108,7 +104,7 @@ float SensorTemperatura::efetuaMedicao()
 
     if (getdefeito() == false)
     {
-        corrente_saida = (low + static_cast<float> (rand()) * static_cast<float>(high - low) / RAND_MAX);
+        corrente_saida = (low + static_cast<float> (rand()) * static_cast<float>(high - low) / RAND_MAX); //Retorna um ponto flutuante entre o intervalo da corrente.
 
         return convert_corrente();
     }
@@ -116,39 +112,49 @@ float SensorTemperatura::efetuaMedicao()
     else exit(EXIT_FAILURE);
 }
 
+void SensorTemperatura::imprimir()
+{
+    cout << "\nLigado = "             << getligado()
+         << "\nDefeito = "            << getdefeito()
+         << "\nNúmero de sensores = " << getn_sensores()
+         << "\nCorrente de saída = "  << getcorrente_saida() << fixed << setprecision(2) << "mA" 
+         << "\nTemperatura = "        << convert_corrente()  << getunidade_engenharia();
+
+}
+
 //Métodos static;
-float SensorTemperatura::CelsiusToFahrenheit()
+float SensorTemperatura::CelsiusToFahrenheit(float c)
 
 {
-    setunidade(1);
+    return ((c * 1.8) + 32);
 }
 
-float SensorTemperatura::CelsiusToKelvin()
+float SensorTemperatura::CelsiusToKelvin(float c)
 
 {
-    K = C + 273;
+    return (c + 273);
 }
 
-float SensorTemperatura::KelvinToCelsius()
+float SensorTemperatura::KelvinToCelsius(float k)
 
 {
-    C = K - 273;
+    return  (k - 273);
 }
 
-float SensorTemperatura::KelvinToFahrenheit()
+float SensorTemperatura::KelvinToFahrenheit(float k)
 
 {
-    F = ((K - 273)*1.8) + 32;
+    return (((k - 273) * 1.8) + 32);
 }
 
-float SensorTemperatura::FahrenheitToCelsius()
+float SensorTemperatura::FahrenheitToCelsius(float f)
 
 {
-    F = (F - 32)/1.8;
+    return ((f - 32)/1.8);
 }
 
-float SensorTemperatura::FahrenheitToKelvin()
+float SensorTemperatura::FahrenheitToKelvin(float f)
 
 {
-    K = ((F-32)*(5/9)) + 273;
+    return (((f - 32) * (5/9)) + 273);
 }
