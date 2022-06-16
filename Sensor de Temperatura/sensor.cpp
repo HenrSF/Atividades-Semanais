@@ -19,6 +19,13 @@ SensorTemperatura::SensorTemperatura(int u)
         setunidade(u);
         break;
     }
+
+    n_sensores++;
+}
+
+SensorTemperatura::~SensorTemperatura()
+{
+
 }
 
 void SensorTemperatura::ligar()
@@ -101,8 +108,9 @@ float SensorTemperatura::efetuaMedicao()
 
     if (getdefeito() == false)
     {
+        corrente_saida = (low + static_cast<float> (rand()) * static_cast<float>(high - low) / RAND_MAX);
 
-        convert_corrente(LOW + rand() * (HIGH - LOW) / RAND_MAX);
+        return convert_corrente();
     }
     
     else exit(EXIT_FAILURE);

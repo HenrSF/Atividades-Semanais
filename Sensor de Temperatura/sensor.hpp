@@ -5,14 +5,14 @@
 
 using namespace std;
 
-#define LOW = 4.00           //Intervalo da corrente para gerar valores aleatórios;
-#define HIGH = 20.00
-
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+
+#define low 4                   //Parâmetros do intervalo da corrente;
+#define high 20
 
 class SensorTemperatura
 {
@@ -27,12 +27,12 @@ class SensorTemperatura
     float corrente_saida;
     int unidade;
 
-    float
     float convert_corrente(); //Função que retorna a temperatura de acordo com a corrente;
     
     public:
 
-    SensorTemperatura (int unidade); //contrutor
+    SensorTemperatura (int unidade); //Constructor;
+    ~SensorTemperatura ();          //Destructor;
 
     //Métodos set;
     void setunidade(int unidade);
