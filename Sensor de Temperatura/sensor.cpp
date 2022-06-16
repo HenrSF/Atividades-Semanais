@@ -120,7 +120,7 @@ float SensorTemperatura::efetuaMedicao()
 float SensorTemperatura::CelsiusToFahrenheit()
 
 {
-    F = (1.8*C) + 32;
+    setunidade(1);
 }
 
 float SensorTemperatura::CelsiusToKelvin()
