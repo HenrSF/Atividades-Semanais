@@ -1,10 +1,12 @@
 #include "sensor.hpp"
 
+int SensorTemperatura::n_sensores;
+
 SensorTemperatura::SensorTemperatura(int u)
 {
     ligado = false;
     defeito = false;
-
+    
     setunidade(u);
 
     n_sensores++;
@@ -98,8 +100,6 @@ float SensorTemperatura::getcorrente_saida()
 
 float SensorTemperatura::efetuaMedicao()
 {
-    srand(time(NULL));
-
     setdefeito(rand() % 100 + 1);
 
     if (getdefeito() == false)
@@ -114,10 +114,11 @@ float SensorTemperatura::efetuaMedicao()
 
 void SensorTemperatura::imprimir()
 {
-    cout << "\nLigado = "             << getligado()
+    cout << fixed << setprecision(2) 
+         << "\nLigado = "             << getligado()
          << "\nDefeito = "            << getdefeito()
          << "\nNúmero de sensores = " << getn_sensores()
-         << "\nCorrente de saída = "  << getcorrente_saida() << fixed << setprecision(2) << "mA" 
+         << "\nCorrente de saída = "  << getcorrente_saida() << "mA" 
          << "\nTemperatura = "        << convert_corrente()  << getunidade_engenharia();
 
 }

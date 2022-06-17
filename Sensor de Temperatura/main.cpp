@@ -2,21 +2,23 @@
 
 int main()
 {
+    srand(time(NULL));
+    
     SensorTemperatura sensor1(1);
-    SensorTemperatura sensor2(2);
-    SensorTemperatura sensor3(5);
-
     sensor1.ligar();
-    sensor2.ligar();
-    sensor3.ligar();
-
     sensor1.efetuaMedicao();
-    sensor2.efetuaMedicao();
-    sensor3.efetuaMedicao();
-
     sensor1.imprimir();
+
+    SensorTemperatura sensor2(2);
+    sensor2.ligar();
+    sensor2.efetuaMedicao();
     sensor2.imprimir();
+
+    SensorTemperatura sensor3(5);
+    sensor3.ligar();
+    sensor3.efetuaMedicao();
     sensor3.imprimir();
+    
 
     cout << "\n" << SensorTemperatura::CelsiusToKelvin(24)
          << "\n" << SensorTemperatura::CelsiusToFahrenheit(24)
