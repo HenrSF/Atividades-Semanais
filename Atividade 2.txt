@@ -1,0 +1,9 @@
+#Atividade 2
+
+case 1 : matrizA = matrizB
+         A.matriz = B.Matirz <-- Don't do it.
+         -> delete [] A.matriz
+         -> New A.matriz
+         -> Atribuir posição a posição
+       
+       Escalonamento: Ponteiros
