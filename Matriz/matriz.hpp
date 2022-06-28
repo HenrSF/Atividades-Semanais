@@ -20,17 +20,17 @@ public:
 
     //Métodos set:
 
-    //Operator unário:
-    Matriz operator[] (int line, int column);       //Retornar valor;
-    Matriz &operator[] (int line, int column);      //Retornar referência;
+    //Operator subscrito:
+    double operator[] (int line, int column);       //Retornar valor;
+    double &operator[] (int line, int column);      //Retornar referência;
 
     //Operator entre objetos:
     Matriz operator+ (const Matriz &other);   //Soma matricial;
     Matriz operator- (const Matriz &other);   //Subtração matricial;
     Matriz operator* (const Matriz &other);   //Multiplicação matricial;
-    Matriz operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
+    void  &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
-    //Operator para o objeto com lvalue modificável:
+    //Operator para o objeto como lvalue modificável:
     Matriz operator+ (double);                //Soma por escalar;
     Matriz operator- (double);                //Subtração por escalar;
     matriz operator* (double);                //Multiplicação por escalar;
