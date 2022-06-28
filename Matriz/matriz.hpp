@@ -31,9 +31,9 @@ public:
     Matriz operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
     //Operator para o objeto com lvalue modificável:
-    Matriz operator+ (auto);                  //Soma por escalar;
-    Matriz operator- (auto);                  //Subtração por escalar;
-    matriz operator* (auto);                  //Multiplicação por escalar;
+    Matriz operator+ (double);                //Soma por escalar;
+    Matriz operator- (double);                //Subtração por escalar;
+    matriz operator* (double);                //Multiplicação por escalar;
     
     //Operator para o objeto como rvalue:
     friend ostream &operator<< (ostream &, const Matriz &right);         //Inserção de fluxo;
