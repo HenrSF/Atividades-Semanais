@@ -20,7 +20,7 @@ private:
     
 public:
 
-    Matriz(int Line, int Column);    //Constructor matriz qualquer;
+    Matriz(int line, int column);    //Constructor matriz qualquer;
     Matriz(int = 3);                 //Constructor matriz quadrada;
     //Matriz(Matriz &other);         //Copy Constructor; 
     ~Matriz();                       //Destructor;
@@ -42,8 +42,8 @@ public:
     double &getmatriz();                       //Dever ser retornada uma cópia da matriz;
     
     //Operator subscrito:
-    double  operator[] (int line, int column); //Retornar valor;
-    double &operator[] (int line, int column); //Retornar referência;
+    double  operator[] (int i) const; //Retornar valor;
+    double &operator[] (int i); //Retornar referência;
 
     //Operator entre objetos:
     Matriz &operator+ (const Matriz &other);   //Soma matricial;
@@ -52,17 +52,17 @@ public:
     Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
     //Operator para o objeto como lvalue modificável:
-    void operator+ (double);                //Soma por escalar;
-    void operator- (double);                //Subtração por escalar;
-    void operator* (double);                //Multiplicação por escalar;
+    void operator+ (double num) const;                //Soma por escalar;
+    void operator- (double num) const;                //Subtração por escalar;
+    void operator* (double num) const;                //Multiplicação por escalar;
     
     //Operator para o objeto como rvalue:
     friend ostream &operator<< (ostream &, const Matriz &right);         //Inserção de fluxo;
     friend istream &operator>> (istream &, Matriz &rigtht);              //Extração de fluxo;
 
-    friend Matriz &operator+ (double, Matriz &right);                    //Soma por escalar;
-    friend Matriz &operator- (double, Matriz &right);                    //Subtração por escalar;
-    friend Matriz &operator* (double, Matriz &right);                    //Multiplicação por escalar;
+    friend Matriz &operator+ (double num, Matriz &right);                    //Soma por escalar;
+    friend Matriz &operator- (double num, Matriz &right);                    //Subtração por escalar;
+    friend Matriz &operator* (double num, Matriz &right);                    //Multiplicação por escalar;
 };
 
 #endif

@@ -1,18 +1,18 @@
 #include "matriz.hpp"
 
-Matriz::Matriz(int Line, int Column)
+Matriz::Matriz(int line, int column)
 {
-    line = Line;
-    column = Column;
-    matriz = new double* [line];
+    this->line = line;
+    this->column = column;
+    matriz = new double* [this->line];
 
     for (int i = 0; i < line; i++)
     {
-        matriz[i] = new double [column];
+        matriz[i] = new double [this->column];
     }
 
-    for (int i = 0; i < line; i++)
-    for (int j = 0; j < column; j++)
+    for (int i = 0; i < this->line; i++)
+    for (int j = 0; j < this->column; j++)
     {
         matriz[i][j] = 0;
     }  
@@ -23,7 +23,6 @@ Matriz::Matriz(int Order)
     line = Order;
     column = Order;
     matriz = new double* [line];
-
     for (int i = 0; i < line; i++)
     {
         matriz[i] = new double [column];
@@ -91,31 +90,35 @@ double &Matriz::getmatriz()
     return **matriz_copy; //Explicação
 }
 
-double Matriz::operator[] (double i, double j) //const? //Problema
+double Matriz::operator[] (int i) const //Como fazer [][]
 {
-    if ((i < 0 || j < 0) || (i < line || j < column)) return matriz[i][j];
+    if ((i < 0 || i)
+    {
+        return
+    }
 
     cerr << ""
 }
 
-double &Matriz::operator[] (double i, double j)
+double &Matriz::operator[] (int)
 {
     return matriz[i][j];
 }
 //Operador entre objetos
-Matriz Matriz::operator+(const Matriz &other) const
+Matriz Matriz::operator+ (const Matriz &other)
 {
-    matriz(line, column);
+    Matriz temp(this->line, this->column);
     
-    if(line = other.line && column = other.column)
+    if( this->line == other.line && this->column == other.column )
     {
-    for (int i = 0; i < line; i++)
-     for (int j = 0; j < column; j++)
+    for (int i = 0; i < this->line; i++)
+     for (int j = 0; j < this->column; j++)
      {
-        matriz[i][j] += other.matriz[i][j]; 
+       temp.matriz[i][j] = this->matriz[i][j] + other.matriz[i][j]; 
+        return temp;
      }
      }
-     
+    
      else
      {
         cerr << "The matrix cannot be summed!";
@@ -123,26 +126,48 @@ Matriz Matriz::operator+(const Matriz &other) const
      }
 }
 //Operador entre objetos
-Matriz Matriz::operator-(const Matriz& other) const
+Matriz Matriz::operator -(const Matriz& other) const
 {
-    matriz(line, column);
-     if(line = other.line && column = other.column)
+    Matriz temp(line, column);
+     if( this->line != other.line && this->column != other.column )
     {
-    for (int i = 0; i < line; i++)
-     for (int j = 0; j < column; j++)
-     {
-        matriz[i][j] -= other.matriz[i][j]; 
-     }
-     }
-     
-     else
-     {
-        cerr << "The matrix cannot be summed!";
+        cerr << "The matrix cannot be subtracted!";
         exit(EXIT_FAILURE);
-     }
+    }
+
+    for (int i = 0; i < line; i++)
+    for (int j = 0; j < column; j++)
+    {
+        temp.matriz[i][j] = this->matriz[i][j] - other.matriz[i][j]; 
+        
+    }
+    return temp;
+} 
+//Operador entre objetos
+Matriz Matriz::operator*(const Matriz& other) 
+{
+
 }
 //Operador entre objetos
-Matriz Matriz::operator*(const Matriz& other) const
+Matriz &Matriz::operator=(const Matriz& other) 
+{
+    if( this->matriz != other.matriz && this->line == other.line && this->column == other.column )
+    {
+        for (int i = 0; i < line; i++)
+        for (int j = 0; j < column; j++)
+        matriz[i][j] = other.matriz[i][j];
+    }
+}
+//Operador entre objeto (lvalue) e inteiro 
+void Matriz::operator+(int n)const
+{
+
+}
+void Matriz::operator-(int n)const
+{
+
+}
+void Matriz::operator*(int n)const
 {
 
 }
