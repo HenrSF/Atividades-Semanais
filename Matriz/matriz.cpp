@@ -91,7 +91,7 @@ double &Matriz::getmatriz()
     return **matriz_copy; //Explicação
 }
 
-double Matriz::operator[] (double i, double j)//Problema
+double Matriz::operator[] (double i, double j) //const? //Problema
 {
     if ((i < 0 || j < 0) || (i < line || j < column)) return matriz[i][j];
 
@@ -101,4 +101,48 @@ double Matriz::operator[] (double i, double j)//Problema
 double &Matriz::operator[] (double i, double j)
 {
     return matriz[i][j];
+}
+//Operador entre objetos
+Matriz Matriz::operator+(const Matriz &other) const
+{
+    matriz(line, column);
+    
+    if(line = other.line && column = other.column)
+    {
+    for (int i = 0; i < line; i++)
+     for (int j = 0; j < column; j++)
+     {
+        matriz[i][j] += other.matriz[i][j]; 
+     }
+     }
+     
+     else
+     {
+        cerr << "The matrix cannot be summed!";
+        exit(EXIT_FAILURE);
+     }
+}
+//Operador entre objetos
+Matriz Matriz::operator-(const Matriz& other) const
+{
+    matriz(line, column);
+     if(line = other.line && column = other.column)
+    {
+    for (int i = 0; i < line; i++)
+     for (int j = 0; j < column; j++)
+     {
+        matriz[i][j] -= other.matriz[i][j]; 
+     }
+     }
+     
+     else
+     {
+        cerr << "The matrix cannot be summed!";
+        exit(EXIT_FAILURE);
+     }
+}
+//Operador entre objetos
+Matriz Matriz::operator*(const Matriz& other) const
+{
+
 }
