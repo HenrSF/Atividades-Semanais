@@ -43,19 +43,19 @@ public:
     
     //Operator subscrito:
     double  operator[] (int i) const; //Retornar valor;
-    double &operator[] (int i); //Retornar referência;
+    double &operator[] (int i);       //Retornar referência;
 
     //Operator entre objetos:
-    Matriz &operator+ (const Matriz &other);   //Soma matricial;
-    Matriz &operator- (const Matriz &other);   //Subtração matricial;
-    Matriz &operator* (const Matriz &other);   //Multiplicação matricial;
-    Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
+    Matriz &operator+ (const Matriz &other);         //Soma matricial;
+    Matriz &operator- (const Matriz &other);         //Subtração matricial;
+    Matriz &operator* (const Matriz &other);         //Multiplicação matricial;
+    const Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
     //Operator para o objeto como lvalue modificável:
     void operator+ (double num) const;                //Soma por escalar;
     void operator- (double num) const;                //Subtração por escalar;
     void operator* (double num) const;                //Multiplicação por escalar;
-    
+
     //Operator para o objeto como rvalue:
     friend ostream &operator<< (ostream &, const Matriz &right);         //Inserção de fluxo;
     friend istream &operator>> (istream &, Matriz &rigtht);              //Extração de fluxo;
