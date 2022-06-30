@@ -1,4 +1,4 @@
-#include "matriz.hpp"
+#include "Matriz.hpp"
 
 int main()
 {

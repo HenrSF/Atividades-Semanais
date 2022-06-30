@@ -1,4 +1,4 @@
-#include "matriz.hpp"
+#include "Matriz.hpp"
 
 Matriz::Matriz(int line, int column)
 {
