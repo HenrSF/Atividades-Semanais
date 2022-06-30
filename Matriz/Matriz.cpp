@@ -105,7 +105,7 @@ double &Matriz::operator[] (int)        //Dúvida
     return matriz[i][j];}
 
 //Operador entre objetos
-Matriz Matriz::operator+ (const Matriz &other)
+Matriz &Matriz::operator+ (const Matriz &other)
 {
     Matriz temp(this->line, this->column);
     
@@ -124,7 +124,7 @@ Matriz Matriz::operator+ (const Matriz &other)
 }
 
 //Operador entre objetos
-Matriz Matriz::operator- (const Matriz &other) const
+Matriz &Matriz::operator- (const Matriz &other) const
 {
     Matriz temp(line, column);
      if( this->line != other.line && this->column != other.column )
@@ -144,7 +144,7 @@ Matriz Matriz::operator- (const Matriz &other) const
 } 
 
 //Operador entre objetos
-Matriz Matriz::operator* (const Matriz &other) 
+Matriz &Matriz::operator* (const Matriz &other) 
 {   
     double soma;
     Matriz temp( this->line, other.column);
