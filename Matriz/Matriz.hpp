@@ -2,14 +2,27 @@
 #define _MATRIZ_
 
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 
 using std::cout;
 using std::cin;
 using std::cerr;
+using std::endl;
 using std::ostream;
 using std::istream;
+
+#include <cstdlib>
+
+using std::exit;
+using std::rand;
+using std::srand;
+
+#include <iomanip>
+
+using std::setprecision;
+using std::fixed;
+using std::setw;
+
+#include <ctime>
 
 class Matriz
 {
@@ -22,7 +35,7 @@ public:
 
     Matriz(int line, int column);    //Constructor matriz qualquer;
     Matriz(int = 3);                 //Constructor matriz quadrada;
-    //Matriz(Matriz &other);         //Copy Constructor; 
+    Matriz(const Matriz &other);     //Copy Constructor; 
     ~Matriz();                       //Destructor;
 
     void imprimir();                 //Mostra os elementos da matriz;
@@ -39,7 +52,7 @@ public:
     //Métodos get:
     int getline()   {return line;};
     int getcolumn() {return column;};
-    double &getmatriz();                       //Dever ser retornada uma cópia da matriz;
+    double &getmatriz();              //Dever ser retornada uma cópia da matriz;
     
     //Operator subscrito:
     double  operator[] (int i) const; //Retornar valor;
@@ -52,9 +65,9 @@ public:
     const Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
     //Operator para o objeto como lvalue modificável:
-    void operator+ (double num) const;                //Soma por escalar;
-    void operator- (double num) const;                //Subtração por escalar;
-    void operator* (double num) const;                //Multiplicação por escalar;
+    Matriz &operator+ (double num) const;                //Soma por escalar;
+    Matriz &operator- (double num) const;                //Subtração por escalar;
+    Matriz &operator* (double num) const;                //Multiplicação por escalar;
 
     //Operator para o objeto como rvalue:
     friend ostream &operator<< (ostream &, const Matriz &right);         //Inserção de fluxo;
@@ -66,3 +79,5 @@ public:
 };
 
 #endif
+
+//Uso de referência como retorno.
