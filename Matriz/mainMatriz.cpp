@@ -12,7 +12,7 @@ matrizB.fillrand(0, 10);
 matrizC.fillrand(0, 10);
 
 Matriz matrizD = matrizA;
-
+ 
 cout << matrizA
      << matrizB 
      << matrizC
