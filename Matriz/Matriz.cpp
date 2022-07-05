@@ -119,8 +119,9 @@ bool Matriz::diagonal() // Ainda falta fazer
 }
 
 
-doublsle **Matriz::gaussian_elimination() // Ainda falta fazer
+double **Matriz::gaussian_elimination() // Ainda falta fazer
 {
+
 }
 
 double &Matriz::getmatriz()
@@ -236,7 +237,7 @@ const Matriz &Matriz::operator=(const Matriz &other)
 
             delete[] this->matriz;
             this->matriz = NULL;
-            this->matriz = new double *[other.line]
+            this->matriz = new double *[other.line];
 
                 for (int i = 0; i < this->line; i++)
             {
@@ -260,7 +261,7 @@ const Matriz &Matriz::operator=(const Matriz &other)
 // Operador entre objeto (lvalue) e inteiro
 Matriz &Matriz::operator+(int num) const
 {
-    Matriz temp(this);
+    Matriz temp(*this);
 
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -273,7 +274,7 @@ Matriz &Matriz::operator+(int num) const
 
 Matriz &Matriz::operator-(int num) const
 {
-    Matriz temp(this);
+    Matriz temp(*this);
 
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -286,7 +287,7 @@ Matriz &Matriz::operator-(int num) const
 
 Matriz &Matriz::operator*(int num) const
 {
-    Matriz temp(this);
+    Matriz temp(*this);
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {

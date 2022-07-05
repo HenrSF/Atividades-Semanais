@@ -38,11 +38,11 @@ public:
     Matriz(const Matriz &other);     //Copy Constructor; 
     ~Matriz();                       //Destructor;
 
-    void imprimir();                 //Mostra os elementos da matriz;
-    void fill();                     //Preencher a matriz manual;
+    void imprimir();                       //Mostra os elementos da matriz;
+    void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
-    bool diagonal();                 //Verificar se a matriz é diagonal;
-    double** gaussian_elimination(); //Escalonamento da matriz;
+    bool diagonal();                       //Verificar se a matriz é diagonal;
+    double** gaussian_elimination();       //Escalonamento da matriz;
 
     //Métodos set:
     //void &setline (int line);     {this->line = line; return *this; };
