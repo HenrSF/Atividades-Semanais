@@ -93,7 +93,7 @@ void Matriz::imprimir()
          << this;
 }
 
-bool Matriz::diagonal() // Ainda falta fazer
+bool Matriz::diagonal()
 {
     int cont = 0;
 
@@ -121,6 +121,20 @@ bool Matriz::diagonal() // Ainda falta fazer
 
 double **Matriz::gaussian_elimination() // Ainda falta fazer
 {
+ if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
+{
+
+}
+
+ if(line <= column)         // Quando o número de linhas é menor ou igual ao número de colunas, ex.: Matriz(2x3) ou Matriz(3x3) 
+{
+    for (int i = 0; i < line; i++)
+    {
+    matriz[1][i];
+
+    *matriz[i]
+    }
+}
 
 }
 
