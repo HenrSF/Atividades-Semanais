@@ -204,7 +204,7 @@ Matriz &Matriz::operator* (const Matriz &other)
 }
 
 //Operador entre objetos
-const Matriz &Matriz::operator= (const Matriz &other);
+const Matriz &Matriz::operator= (const Matriz &other)
 {    
     if(&other != this)
     {
