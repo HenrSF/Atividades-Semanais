@@ -94,12 +94,12 @@ void Matriz::imprimir()
 }
 
 
-bool Matriz::diagonal()
+bool Matriz::diagonal() //Ainda falta fazer
 {
 
 }
 
-double** Matriz::gaussian_elimination()
+double** Matriz::gaussian_elimination() //Ainda falta fazer
 {
 
 }
@@ -119,7 +119,7 @@ double &Matriz::getmatriz()
     {
         matriz_copy[i][j] = matriz[i][j];
     }
-    return **matriz_copy; //Explicação
+    return **matriz_copy; //Explicação: se esse retorno é correto e pq
 }
 
 double Matriz::operator[] (int i) const //Como fazer [][]
@@ -231,7 +231,7 @@ const Matriz &Matriz::operator= (const Matriz &other);
         matriz[i][j] = other.matriz[i][j];
         }
 
-        return *this; //esse retorno é correto e pq usar
+        return *this; //esse retorno é correto? e pq usar
     }
 
     cerr << "They are the same matrix!";
