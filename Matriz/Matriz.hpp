@@ -23,6 +23,7 @@ using std::fixed;
 using std::setw;
 
 #include <ctime>
+using std::time;
 
 class Matriz
 {
@@ -55,8 +56,7 @@ public:
     double &getmatriz();              //Dever ser retornada uma cópia da matriz;
     
     //Operator subscrito:
-    double  operator[] (int i) const; //Retornar valor;
-    double &operator[] (int i);       //Retornar referência;
+    double * operator[] (int i); //Retornar valor;
 
     //Operator entre objetos:
     Matriz &operator+ (const Matriz &other);         //Soma matricial;
@@ -65,9 +65,9 @@ public:
     const Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
 
     //Operator para o objeto como lvalue modificável:
-    Matriz &operator+ (double num) const;                //Soma por escalar;
-    Matriz &operator- (double num) const;                //Subtração por escalar;
-    Matriz &operator* (double num) const;                //Multiplicação por escalar;
+    Matriz &operator+ (const double num) const;                //Soma por escalar;
+    Matriz &operator- (const double num) const;                //Subtração por escalar;
+    Matriz &operator* (const double num) const;                //Multiplicação por escalar;
 
     //Operator para o objeto como rvalue:
     friend ostream &operator<< (ostream &, const Matriz &right);         //Inserção de fluxo;

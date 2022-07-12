@@ -8,7 +8,7 @@ Matriz::Matriz(int line, int column)
 
     for (int i = 0; i < line; i++)
     {
-        matriz[i] = new double[this->column];
+        matriz[i] = new double[this->column]();
     }
 
     for (int i = 0; i < this->line; i++)
@@ -61,9 +61,10 @@ Matriz::~Matriz()
         delete[] matriz[i];
     }
     delete[] matriz;
+
     matriz = nullptr;
 
-    cout << "The Matrix has been destroyed";
+    cout << "\nThe Matrix has been destroyed.";
 }
 
 void Matriz::fill()
@@ -77,8 +78,6 @@ void Matriz::fill()
 
 void Matriz::fillrand(double min, double max)
 {
-    srand(time(NULL));
-
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -112,14 +111,14 @@ bool Matriz::diagonal()
  
         if(cont == line * column - line)
         {
-            return true;
+            return true; //retornará 1
         }
     }
-    return false;
+
+    return false; //retornará 0
 }
 
-
-double **Matriz::gaussian_elimination() // Ainda falta fazer
+/*double **Matriz::gaussian_elimination() // Ainda falta fazer
 {
  if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
 {
@@ -132,11 +131,12 @@ double **Matriz::gaussian_elimination() // Ainda falta fazer
     {
     matriz[1][i];
 
-    *matriz[i]
+    *matriz[i];
     }
 }
 
 }
+*/
 
 double &Matriz::getmatriz()
 {
@@ -156,20 +156,15 @@ double &Matriz::getmatriz()
     return **matriz_copy; // Explicação: se esse retorno é correto e pq
 }
 
-double Matriz::operator[](int i) const // Como fazer [][]
+double * Matriz::operator[](int i) // Como fazer [][]
 {
-    /*if (i < 0 || i)
+    if (i <= 0 || i < this->line)
     {
-        return
+        return this->matriz[i];
     }
 
-    cerr << "";
-    */
-}
-
-double &Matriz::operator[](int i) // Dúvida
-{
-    return *matriz[i];
+    cerr << "\nÍndice inválido!";
+    exit ( EXIT_FAILURE);
 }
 
 // Operador entre objetos
@@ -183,21 +178,22 @@ Matriz &Matriz::operator+(const Matriz &other)
             for (int j = 0; j < this->column; j++)
             {
                 temp.matriz[i][j] = this->matriz[i][j] + other.matriz[i][j];
-                return temp;
             }
+
+        return temp;
     }
 
-    cerr << "The matrix cannot be summed!";
+    cerr << "\nThe matrix cannot be summed!";
     exit(EXIT_FAILURE);
 }
 
 // Operador entre objetos
-Matriz &Matriz::operator-(const Matriz &other) const
+Matriz &Matriz::operator-(const Matriz &other) 
 {
     Matriz temp(line, column);
     if (this->line != other.line && this->column != other.column)
     {
-        cerr << "The matrix cannot be subtracted!";
+        cerr << "\nThe matrix cannot be subtracted!";
         exit(EXIT_FAILURE);
     }
 
@@ -218,7 +214,7 @@ Matriz &Matriz::operator*(const Matriz &other)
 
     if (this->column != other.line)
     {
-        cerr << "The matrix cannot be multiplied!";
+        cerr << "\nThe matrix cannot be multiplied!";
         exit(EXIT_FAILURE);
     }
 
@@ -246,7 +242,7 @@ const Matriz &Matriz::operator=(const Matriz &other)
         {
             for (int i = 0; i < this->line; i++)
             {
-                delete this->matriz[i];
+                delete[] this->matriz[i];
             }
 
             delete[] this->matriz;
@@ -259,21 +255,21 @@ const Matriz &Matriz::operator=(const Matriz &other)
             }
         }
 
-        for (int i = 0; i < line; i++)
-            for (int j = 0; j < column; j++)
+        for (int i = 0; i < this->line; i++)
+            for (int j = 0; j < this->column; j++)
             {
-                matriz[i][j] = other.matriz[i][j];
+                this->matriz[i][j] = other.matriz[i][j];
             }
 
         return *this; // esse retorno é correto? e pq usar
     }
 
-    cerr << "They are the same matrix!";
+    cerr << "\nThey are the same matrix!";
     exit(EXIT_FAILURE);
 }
 
 // Operador entre objeto (lvalue) e inteiro
-Matriz &Matriz::operator+(int num) const
+Matriz &Matriz::operator+(double num) const
 {
     Matriz temp(*this);
 
@@ -286,7 +282,7 @@ Matriz &Matriz::operator+(int num) const
     return temp;
 }
 
-Matriz &Matriz::operator-(int num) const
+Matriz &Matriz::operator-(double num) const
 {
     Matriz temp(*this);
 
@@ -299,7 +295,7 @@ Matriz &Matriz::operator-(int num) const
     return temp;
 }
 
-Matriz &Matriz::operator*(int num) const
+Matriz &Matriz::operator*(double num) const
 {
     Matriz temp(*this);
     for (int i = 0; i < line; i++)
@@ -318,17 +314,18 @@ ostream &operator<<(ostream &output, const Matriz &right)
 
         for (int j = 0; j < right.column; j++)
         {
-            cout << setprecison(2) << setw(4)
-                 << right.matriz[i][j];
+            cout << fixed << setprecision(2)
+                 << right.matriz[i][j] << " ";
         }
 
-        cout << " |";
+        cout << "|";
     }
+        cout << endl;
 
     return output;
 }
 
-istream &operator>>(istream &input, Matriz &rigtht)
+istream &operator>>(istream &input, Matriz &right)
 {
     for (int i = 0; i < right.line; i++)
         for (int j = 0; j < right.column; j++)
@@ -339,41 +336,24 @@ istream &operator>>(istream &input, Matriz &rigtht)
     return input;
 }
 
-Matriz &operator+(double num, Matriz &right)
+Matriz &operator+(const double num, Matriz &right)
 {
-    Matriz temp(right);
-
-    for (int i = 0; i < right.line; i++)
-        for (int j = 0; j < right.column; j++)
-        {
-            temp.matriz[i][j] += num;
-        }
-
-    return temp;
+    return (right + num);
 }
 
-Matriz &operator-(double num, Matriz &right)
+Matriz &operator-(const double num, Matriz &right)
 {
-    Matriz temp(right);
+    Matriz tmp(right);
 
     for (int i = 0; i < right.line; i++)
         for (int j = 0; j < right.column; j++)
         {
-            temp.matriz[i][j] -= num;
+            tmp.matriz[i][j] = num - right.matriz[i][j];
         }
-
-    return temp;
+    return tmp;
 }
 
-Matriz &operator*(double num, Matriz &right)
+Matriz &operator*(const double num, Matriz &right)
 {
-    Matriz temp(right);
-
-    for (int i = 0; i < right.line; i++)
-        for (int j = 0; j < right.column; j++)
-        {
-            temp.matriz[i][j] *= num;
-        }
-
-    return temp;
+    return (right * num);
 }

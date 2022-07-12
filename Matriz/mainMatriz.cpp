@@ -2,6 +2,7 @@
 
 int main()
 {
+srand(time(NULL));
 
 Matriz matrizA(3);
 Matriz matrizB(3, 2);
@@ -18,6 +19,21 @@ cout << matrizA
      << matrizC
      << matrizD
      << endl;
+
+cout << matrizA[1][2];
+
+matrizA[1][2] = 25;      
+
+cout << matrizA;
+
+cout << matrizA.diagonal();
+
+cout << "\nDigite os valores para a matriz A:";
+
+cin >> matrizA;
+
+cout << matrizA
+     << matrizA.diagonal() << endl;
 
   return 0;   
 }
