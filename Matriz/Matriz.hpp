@@ -30,7 +30,7 @@ class Matriz
 private:
     
     int line, column;
-    double** matriz;
+    double **matriz;
 
 public:
 
@@ -43,7 +43,7 @@ public:
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
     bool diagonal();                       //Verificar se a matriz é diagonal;
-    double** gaussian_elimination();       //Escalonamento da matriz;
+    double &gaussian_elimination();       //Escalonamento da matriz;
 
     //Métodos set:
     //void &setline (int line);     {this->line = line; return *this; };
@@ -53,10 +53,10 @@ public:
     //Métodos get:
     int getline()   {return line;};
     int getcolumn() {return column;};
-    double &getmatriz();              //Dever ser retornada uma cópia da matriz;
+    double **getmatriz();              //Dever ser retornada uma cópia da matriz;
     
     //Operator subscrito:
-    double * operator[] (int i); //Retornar valor;
+    double *operator[] (int i); //Retornar valor;
 
     //Operator entre objetos:
     Matriz &operator+ (const Matriz &other);         //Soma matricial;

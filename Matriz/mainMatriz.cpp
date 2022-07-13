@@ -18,22 +18,29 @@ cout << matrizA
      << matrizB 
      << matrizC
      << matrizD
-     << endl;
+     << endl;    
 
-cout << matrizA[1][2];
+double **a;
 
-matrizA[1][2] = 25;      
+a = new double *[3];
 
-cout << matrizA;
+for(int i=0; i<3; i++)
+{
+     a[i] = new double[2]();
+}
 
-cout << matrizA.diagonal();
+a = matrizB.getmatriz();
 
-cout << "\nDigite os valores para a matriz A:";
+for (int i = 0; i < 3; i++)
+{
+cout << endl;
+for (int j = 0; j < 2; j++)
+{
+cout << a[i][j] << " ";
+}
+}
 
-cin >> matrizA;
-
-cout << matrizA
-     << matrizA.diagonal() << endl;
+matrizA.imprimir();
 
   return 0;   
 }

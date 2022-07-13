@@ -89,7 +89,7 @@ void Matriz::imprimir()
 {
     cout << "\nNúmero de linhas: " << this->line
          << "\nNúmero de colunas: " << this->column << endl
-         << this;
+         << *this;
 }
 
 bool Matriz::diagonal()
@@ -118,7 +118,7 @@ bool Matriz::diagonal()
     return false; //retornará 0
 }
 
-/*double **Matriz::gaussian_elimination() // Ainda falta fazer
+/*double &Matriz::gaussian_elimination() // Ainda falta fazer
 {
  if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
 {
@@ -138,7 +138,7 @@ bool Matriz::diagonal()
 }
 */
 
-double &Matriz::getmatriz()
+double **Matriz::getmatriz()
 {
     double **matriz_copy = NULL;
     matriz_copy = new double *[this->line];
@@ -153,10 +153,10 @@ double &Matriz::getmatriz()
         {
             matriz_copy[i][j] = matriz[i][j];
         }
-    return **matriz_copy; // Explicação: se esse retorno é correto e pq
+    return matriz_copy; // Explicação: se esse retorno é correto e pq
 }
 
-double * Matriz::operator[](int i) // Como fazer [][]
+double *Matriz::operator[](int i) // Como fazer [][]
 {
     if (i <= 0 || i < this->line)
     {
@@ -208,14 +208,15 @@ Matriz &Matriz::operator*(const Matriz &other) // Falta alterar a matriz
 {
     double soma;
     Matriz temp(*this);
-
-    this = Matriz matrix(this->line, other.column)
+    Matriz matrix(this->line, other.column);
 
     if (this->column != other.line)
     {
         cerr << "\nThe matrix cannot be multiplied!";
         exit(EXIT_FAILURE);
     }
+
+    *this = matrix;
 
     for (int i = 0; i < this->line; i++) // Multiplicando as Matrizes 1 e 2.
         for (int j = 0; j < other.column; j++)
@@ -224,7 +225,7 @@ Matriz &Matriz::operator*(const Matriz &other) // Falta alterar a matriz
 
             for (int k = 0; k < this->column; k++)
             {
-                soma += temp.matriz[i][k] * other.matriz[k][j];
+                soma += (temp.matriz[i][k] * other.matriz[k][j]);
                 this->matriz[i][j] = soma;
             }
         }
@@ -246,11 +247,14 @@ const Matriz &Matriz::operator=(const Matriz &other)
 
             delete[] this->matriz;
             this->matriz = NULL;
+
             this->matriz = new double *[other.line];
+            this->line = other.line;
+            this->column = other.column;
 
                 for (int i = 0; i < this->line; i++)
             {
-                this->matriz[i] = new double[other.column];
+                this->matriz[i] = new double[this->column];
             }
         }
 
