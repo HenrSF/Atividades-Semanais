@@ -1,52 +1,45 @@
 #include "Matriz.hpp"
 
-Matriz::Matriz(int line, int column)
+Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
 {
+    //Definindo os atributos de linha e coluna;
     this->line = line;
     this->column = column;
+    //Alocando memória dinamicamente para o atributo **matriz;
     this->matriz = new double *[this->line];
-
     for (int i = 0; i < this->line; i++)
     {
-        matriz[i] = new double[this->column]();
+        matriz[i] = new double[this->column](); //Iniciando todos valores iguais a 0;
     }
-
-    for (int i = 0; i < this->line; i++)
-        for (int j = 0; j < this->column; j++)
-        {
-            matriz[i][j] = 0;
-        }
 }
 
-Matriz::Matriz(int Order)
-{
+Matriz::Matriz(int Order) //Construtor para matrizes de ordem pré-definida
+{   
+    //Definindo os atributos de linha e coluna;
     this->line = Order;
     this->column = Order;
+    //Alocando memória dinamicamente para o atributo **matriz;
     this->matriz = new double *[this->line];
     for (int i = 0; i < this->line; i++)
     {
-        matriz[i] = new double[this->column];
+        matriz[i] = new double[this->column](); //Iniciando todos valores iguais a 0;
     }
-
-    for (int i = 0; i < this->line; i++)
-        for (int j = 0; j < this->column; j++)
-        {
-            matriz[i][j] = 0;
-        }
+    
 }
 
-Matriz::Matriz(const Matriz &other)
+Matriz::Matriz(const Matriz &other) //Construtor de cópia;
 {
+    //Definindo os atributos de linha e coluna, iguais ao do objeto parâmetro;
     this->line = other.line;
     this->column = other.column;
-
+    //Alocando memória dinamicamente para o atributo **matriz;
     this->matriz = new double *[this->line];
 
     for (int i = 0; i < this->line; i++)
     {
         this->matriz[i] = new double[this->column];
     }
-
+    //Atribuindo os valores da matriz iguais aos do objeto copiado.
     for (int i = 0; i < this->line; i++)
         for (int j = 0; j < this->column; j++)
         {
@@ -54,20 +47,21 @@ Matriz::Matriz(const Matriz &other)
         }
 }
 
-Matriz::~Matriz()
+Matriz::~Matriz() //Destrutor
 {
+    //Desalocando a memória das colunas;
     for (int i = 0; i < line; i++)
     {
         delete[] this->matriz[i];
     }
-    delete[] this->matriz;
+    delete[] this->matriz; //Desalocando a matriz;
 
-    this->matriz = nullptr;
+    this->matriz = nullptr; //Ponteiro nulo;
 
     cout << "\nThe Matrix has been destroyed.";
 }
 
-void Matriz::fill()
+void Matriz::fill() //Método para preenchimento manual de matrizes;
 {
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -76,46 +70,47 @@ void Matriz::fill()
         }
 }
 
-void Matriz::fillrand(double min, double max)
+void Matriz::fillrand(double min, double max) //Método para preenchimento randomico de matrizes;
 {
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            matriz[i][j] = (min + (rand()) * (max - min) / RAND_MAX); // Explicação
+            matriz[i][j] = (min + (rand()) * (max - min) / RAND_MAX); //Gerando um ponto flutante aleatório;
         }
 }
 
-void Matriz::imprimir()
+void Matriz::imprimir() //Método para imprimir todos os atrinutos do objeto.
 {
     cout << "\nNúmero de linhas: " << this->line
          << "\nNúmero de colunas: " << this->column << endl
-         << *this;
+         << *this
+         << "\nMatriz diagonal:" << diagonal_check();
 }
 
-bool Matriz::diagonal()
+bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 {
     int cont = 0;
 
-    if (line == column)
+    if (line == column) //Verificar se a matriz é quadrada;
     {
         for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            if (i == j) continue;
+            if (i == j) continue; //Ignora os elementos da diagonal principal;
                 
-            if (matriz[i][j] == 0)//diagonal
+            if (matriz[i][j] == 0) //Se um elemento for igual a zero, incrementa o contador;
             {
-                cont++;
+                cont++; //Conta a quantiade de zeros fora da diagonal principal;
             }
         }
  
-        if(cont == line * column - line)
+        if(cont == (line * column) - line) //Se o contador for igual ao numero de elementos fora da diagonal principal, retorna true;
         {
-            return true; //retornará 1
+            return true;
         }
     }
 
-    return false; //retornará 0
+    return false;
 }
 
 /*double &Matriz::gaussian_elimination() // Ainda falta fazer
@@ -138,8 +133,9 @@ bool Matriz::diagonal()
 }
 */
 
-double **Matriz::getmatriz()
-{
+double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
+{   
+    //Alocando memória para copiar o atributo matriz;
     double **matriz_copy = NULL;
     matriz_copy = new double *[this->line];
 
@@ -147,17 +143,18 @@ double **Matriz::getmatriz()
     {
         matriz_copy[i] = new double[this->column];
     }
-
+    //Copiando os valores do atributo matriz;
     for (int i = 0; i < this->line; i++)
         for (int j = 0; j < this->column; j++)
         {
             matriz_copy[i][j] = matriz[i][j];
         }
-    return matriz_copy; // Explicação: se esse retorno é correto e pq
+    return matriz_copy; //Retorna a cópia do atributo matriz, para manter o encapsulamento;
 }
 
-double *Matriz::operator[](int i) // Como fazer [][]
+double *Matriz::operator[](int i)
 {
+    //
     if (i <= 0 || i < this->line)
     {
         return this->matriz[i];
@@ -206,9 +203,8 @@ Matriz &Matriz::operator-(const Matriz &other)
 // Operador entre objetos
 Matriz &Matriz::operator*(const Matriz &other) // Falta alterar a matriz
 {
-    double soma;
     Matriz temp(*this);
-    Matriz matrix(this->line, other.column);
+    Matriz temp1(this->line, other.column);
 
     if (this->column != other.line)
     {
@@ -216,20 +212,17 @@ Matriz &Matriz::operator*(const Matriz &other) // Falta alterar a matriz
         exit(EXIT_FAILURE);
     }
 
-    *this = matrix;
-
     for (int i = 0; i < this->line; i++) // Multiplicando as Matrizes 1 e 2.
-        for (int j = 0; j < other.column; j++)
+    for (int j = 0; j < other.column; j++)
+    {
+        for (int k = 0; k < this->column; k++)
         {
-            soma = 0;
-
-            for (int k = 0; k < this->column; k++)
-            {
-                soma += (temp.matriz[i][k] * other.matriz[k][j]);
-                this->matriz[i][j] = soma;
-            }
+            temp1.matriz[i][j] += (temp.matriz[i][k] * other.matriz[k][j]);
+                
         }
+    }
 
+    *this = temp1;
     return *this;
 }
 
@@ -248,9 +241,10 @@ const Matriz &Matriz::operator=(const Matriz &other)
             delete[] this->matriz;
             this->matriz = NULL;
 
-            this->matriz = new double *[other.line];
             this->line = other.line;
             this->column = other.column;
+
+            this->matriz = new double *[this->line];
 
                 for (int i = 0; i < this->line; i++)
             {

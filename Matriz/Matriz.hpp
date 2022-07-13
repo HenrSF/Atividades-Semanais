@@ -42,18 +42,13 @@ public:
     void imprimir();                       //Mostra os elementos da matriz;
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
-    bool diagonal();                       //Verificar se a matriz é diagonal;
-    double &gaussian_elimination();       //Escalonamento da matriz;
-
-    //Métodos set:
-    //void &setline (int line);     {this->line = line; return *this; };
-    //void &setcolumn (int column); {this->column = column; return *this;};
-    
+    bool diagonal_check();                  //Verificar se a matriz é diagonal;
+    double &gaussian_elimination();       //Escalonamento da matriz;    
 
     //Métodos get:
     int getline()   {return line;};
     int getcolumn() {return column;};
-    double **getmatriz();              //Dever ser retornada uma cópia da matriz;
+    double **getmatriz();              //Retorna uma cópia do atributo matriz;
     
     //Operator subscrito:
     double *operator[] (int i); //Retornar valor;
