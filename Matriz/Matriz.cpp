@@ -115,6 +115,7 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 
 /*double &Matriz::gaussian_elimination() // Ainda falta fazer
 {
+    matriz[i][i+1]
  if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
 {
 
@@ -149,23 +150,22 @@ double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
         {
             matriz_copy[i][j] = matriz[i][j];
         }
-    return matriz_copy; //Retorna a cópia do atributo matriz, para manter o encapsulamento;
+    return matriz_copy; //Retorna a cópia do atributo matriz para manter o encapsulamento;
 }
 
-double *Matriz::operator[](int i)
+double *Matriz::operator[](int i) //Acessa um índice da matriz.
 {
-    //
+
     if (i <= 0 || i < this->line)
     {
-        return this->matriz[i];
+        return this->matriz[i]; //Retorno de um ponteiro.
     }
 
     cerr << "\nÍndice inválido!";
     exit ( EXIT_FAILURE);
 }
 
-// Operador entre objetos
-Matriz &Matriz::operator+(const Matriz &other)
+Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 {
     if (this->line == other.line && this->column == other.column)
     {
@@ -175,15 +175,15 @@ Matriz &Matriz::operator+(const Matriz &other)
                 this->matriz[i][j] += other.matriz[i][j];
             }
 
-        return *this;
+        return *this; //Retorna o próprio objeto;
     }
 
     cerr << "\nThe matrix cannot be summed!";
     exit(EXIT_FAILURE);
 }
 
-// Operador entre objetos
-Matriz &Matriz::operator-(const Matriz &other) 
+
+Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes 
 {
     if (this->line != other.line && this->column != other.column)
     {
@@ -197,53 +197,53 @@ Matriz &Matriz::operator-(const Matriz &other)
             this->matriz[i][j] -= other.matriz[i][j];
         }
 
-    return *this;
+    return *this; //Retorna o próprio objeto;
 }
 
-// Operador entre objetos
-Matriz &Matriz::operator*(const Matriz &other) // Falta alterar a matriz
+Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
 {
-    Matriz temp(*this);
-    Matriz temp1(this->line, other.column);
+    Matriz temp(this->line, other.column); //Objeto temporário para receber os valores da multiplicação;
 
-    if (this->column != other.line)
+    if (this->column != other.line) //Condição para multiplicar 2 matrizes.
     {
         cerr << "\nThe matrix cannot be multiplied!";
         exit(EXIT_FAILURE);
     }
-
-    for (int i = 0; i < this->line; i++) // Multiplicando as Matrizes 1 e 2.
+    //Algorotímo para efetuar a multiplicação de matrizes;
+    for (int i = 0; i < this->line; i++)
     for (int j = 0; j < other.column; j++)
     {
-        for (int k = 0; k < this->column; k++)
+        for (int k = 0; k < this->column; k++)//Percorre a linha da primeira matriz junto a coluna da segunda matriz;
         {
-            temp1.matriz[i][j] += (temp.matriz[i][k] * other.matriz[k][j]);
-                
+            temp.matriz[i][j] += (this->matriz[i][k] * other.matriz[k][j]); //Somatório das multiplicações índice à índice para atribuição dos valores da matriz resulante;
         }
     }
 
-    *this = temp1;
-    return *this;
+    *this = temp; //O objeto recebe os valores do objeto temporário;
+    return *this; //Retorna o próprio objeto;
 }
 
-// Operador entre objetos
-const Matriz &Matriz::operator=(const Matriz &other)
+
+const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outra;
 {
+    //Verifica se tem o mesmo endereço
     if (&other != this)
     {
-        if (this->column != other.column || this->line != other.line)
+        if (this->column != other.column || this->line != other.line) //Verifica se as matrizes possuem a mesma dimensão;
         {
+            //Desalocando a memória da matriz;
             for (int i = 0; i < this->line; i++)
             {
                 delete[] this->matriz[i];
             }
-
             delete[] this->matriz;
             this->matriz = NULL;
-
+            
+            //Deixa as matrizes com a mesma dimensão;
             this->line = other.line;
             this->column = other.column;
-
+            
+            //Alocando memória para a nova matriz;
             this->matriz = new double *[this->line];
 
                 for (int i = 0; i < this->line; i++)
@@ -251,22 +251,23 @@ const Matriz &Matriz::operator=(const Matriz &other)
                 this->matriz[i] = new double[this->column];
             }
         }
-
+        
+        //Atribui os valores de uma matriz a outra;
         for (int i = 0; i < this->line; i++)
             for (int j = 0; j < this->column; j++)
             {
                 this->matriz[i][j] = other.matriz[i][j];
             }
 
-        return *this; // esse retorno é correto? e pq usar
+        return *this; //Retorna o próprio objeto;
     }
 
     cerr << "\nThey are the same matrix!";
     exit(EXIT_FAILURE);
 }
 
-// Operador entre objeto (lvalue) e inteiro
-Matriz &Matriz::operator+(double num)
+
+Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à esquerda;
 {
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -274,10 +275,10 @@ Matriz &Matriz::operator+(double num)
             this->matriz[i][j] += num;
         }
 
-    return *this;
+    return *this; //Retorna o próprio objeto;
 }
 
-Matriz &Matriz::operator-(double num)
+Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o objeto à esquerda;
 {
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -285,10 +286,10 @@ Matriz &Matriz::operator-(double num)
             this->matriz[i][j] -= num;
         }
 
-    return *this;
+    return *this; //Retorna o próprio objeto;
 }
 
-Matriz &Matriz::operator*(double num)
+Matriz &Matriz::operator*(double num) //Multiplicação de matrize e escalar com o objeto à esquerda;
 {
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
@@ -296,11 +297,12 @@ Matriz &Matriz::operator*(double num)
             this->matriz[i][j] *= num;
         }
 
-    return *this;
+    return *this; //Retorna o próprio objeto;
 }
 
-ostream &operator<<(ostream &output, const Matriz &right)
+ostream &operator<<(ostream &output, const Matriz &right) //Operador de inserção de fluxo;
 {
+    //Imprime a matriz em um formato tradicional;
     for (int i = 0; i < right.line; i++)
     {
         cout << endl;
@@ -308,7 +310,7 @@ ostream &operator<<(ostream &output, const Matriz &right)
 
         for (int j = 0; j < right.column; j++)
         {
-            cout << fixed << setprecision(2)
+            cout << fixed << setprecision(2) //Saída com precisão de duas casas decimais;
                  << right.matriz[i][j] << " ";
         }
 
@@ -316,36 +318,37 @@ ostream &operator<<(ostream &output, const Matriz &right)
     }
         cout << endl;
 
-    return output;
+    return output; //Retorna o objeto output para efeito em cascata;
 }
 
-istream &operator>>(istream &input, Matriz &right)
-{
+istream &operator>>(istream &input, Matriz &right) //Operador de extração de fluxo
+{   
+    //Permite que o usuário preencha a matriz;
     for (int i = 0; i < right.line; i++)
         for (int j = 0; j < right.column; j++)
         {
             cin >> right.matriz[i][j];
         }
 
-    return input;
+    return input; //Retorna o objeto input para efeito em cascata;
 }
 
-Matriz &operator+(const double num, Matriz &right)
+Matriz &operator+(const double num, Matriz &right) //Soma de matriz e escalar, com objeto à direita; 
 {
     return (right + num);
 }
 
-Matriz &operator-(const double num, Matriz &right)
+Matriz &operator-(const double num, Matriz &right) //Subtração de matriz e escalar, com objeto à direita;
 {
     for (int i = 0; i < right.line; i++)
         for (int j = 0; j < right.column; j++)
         {
             right.matriz[i][j] = num - right.matriz[i][j];
         }
-    return right;
+    return right; //
 }
 
-Matriz &operator*(const double num, Matriz &right)
+Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e escalar, com objeto à direita;
 {
     return (right * num);
 }

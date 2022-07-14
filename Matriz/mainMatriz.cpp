@@ -6,7 +6,7 @@ srand(time(NULL));
 
 Matriz matrizA;
 Matriz matrizB;
-Matriz matrizC(2, 3);
+Matriz matrizC;
 
 matrizA.fill();
 matrizB.fill();
@@ -14,8 +14,9 @@ matrizC.fill();
 
 Matriz matrizD = matrizA;
  
-matrizA.imprimir();
-matrizB.imprimir();
+matrizA * matrizB;
+
+cout << matrizA;
 
   return 0;   
 }

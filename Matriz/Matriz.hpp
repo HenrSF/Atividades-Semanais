@@ -20,7 +20,6 @@ using std::srand;
 
 using std::setprecision;
 using std::fixed;
-using std::setw;
 
 #include <ctime>
 using std::time;
