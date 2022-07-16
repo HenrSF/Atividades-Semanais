@@ -113,12 +113,21 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
     return false;
 }
 
-/*double &Matriz::gaussian_elimination() // Ainda falta fazer
+double &Matriz::gaussian_elimination() // Ainda falta fazer
 {
     matriz[i][i+1]
  if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
 {
+    //Pivotização;
+    for (int i = 0; i < column; i++) //Utiliza um quadrado baseado na quantidade de colunas;
+        for (int k = i + 1; k <= column; k++) //Linha abaixo
+        {
+            if(matriz[i][i] != matriz[k][i])
+            {
+                
 
+            }
+        }
 }
 
  if(line <= column)         // Quando o número de linhas é menor ou igual ao número de colunas, ex.: Matriz(2x3) ou Matriz(3x3) 
@@ -126,13 +135,9 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
     for (int i = 0; i < line; i++)
     {
     matriz[1][i];
-
-    *matriz[i];
     }
 }
-
 }
-*/
 
 double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
 {   
@@ -167,7 +172,7 @@ double *Matriz::operator[](int i) //Acessa um índice da matriz.
 
 Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 {
-    if (this->line == other.line && this->column == other.column)
+    if (this->line == other.line && this->column == other.column) //Verifca a possibilidade de realizar a operação;
     {
         for (int i = 0; i < this->line; i++)
             for (int j = 0; j < this->column; j++)
@@ -185,7 +190,7 @@ Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 
 Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes 
 {
-    if (this->line != other.line && this->column != other.column)
+    if (this->line != other.line && this->column != other.column) //Verifca a possibilidade de realizar a operação;
     {
         cerr << "\nThe matrix cannot be subtracted!";
         exit(EXIT_FAILURE);
@@ -345,7 +350,7 @@ Matriz &operator-(const double num, Matriz &right) //Subtração de matriz e esc
         {
             right.matriz[i][j] = num - right.matriz[i][j];
         }
-    return right; //
+    return right; //Retorna a matriz objeto da classe;
 }
 
 Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e escalar, com objeto à direita;
