@@ -41,8 +41,8 @@ public:
     void imprimir();                       //Mostra os elementos da matriz;
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
-    bool diagonal_check();                  //Verificar se a matriz é diagonal;
-    double &gaussian_elimination();       //Escalonamento da matriz;    
+    bool diagonal_check();                 //Verificar se a matriz é diagonal;
+    void gaussian_elimination();           //Escalonamento da matriz;    
 
     //Métodos get:
     int getline()   {return line;};

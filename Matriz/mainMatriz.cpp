@@ -4,17 +4,17 @@ int main()
 {
 srand(time(NULL));
 
-Matriz matrizA;
+Matriz matrizA(5, 4);
 Matriz matrizB;
 Matriz matrizC;
 
 matrizA.fill();
-matrizB.fill();
-matrizC.fill();
+//matrizB.fill();
+//matrizC.fill();
 
-Matriz matrizD = matrizA;
+//Matriz matrizD = matrizA;
  
-matrizA * matrizB;
+matrizA.gaussian_elimination();
 
 cout << matrizA;
 

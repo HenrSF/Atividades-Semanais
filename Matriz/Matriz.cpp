@@ -113,30 +113,41 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
     return false;
 }
 
-double &Matriz::gaussian_elimination() // Ainda falta fazer
+void Matriz::gaussian_elimination() //Ainda falta fazer
 {
-    matriz[i][i+1]
- if(line > column)          // Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
-{
-    //Pivotização;
-    for (int i = 0; i < column; i++) //Utiliza um quadrado baseado na quantidade de colunas;
-        for (int k = i + 1; k <= column; k++) //Linha abaixo
-        {
-            if(matriz[i][i] != matriz[k][i])
+    double coefficient = 1;
+    if(line > column)          //Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
+    {
+        //Pivotização;
+        for (int i = 0; i < column; i++) //Utiliza um quadrado baseado na quantidade de colunas;
+            for (int k = i + 1; k < column; k++) //Linha abaixo
             {
-                
+                if(matriz[i][i] > 0)
+                {
+                    coefficient = matriz[k][i] / matriz[i][i];
+                }
+
+                if(matriz[i][i] < 0)
+                {
+                    coefficient = -1 * (matriz[k][i] / matriz[i][i]);
+                }
+
+                for(int j = 0; j < column; j++)
+                {
+                    matriz[k][j] -= coefficient * matriz[i][j];
+                }
 
             }
-        }
-}
-
- if(line <= column)         // Quando o número de linhas é menor ou igual ao número de colunas, ex.: Matriz(2x3) ou Matriz(3x3) 
-{
-    for (int i = 0; i < line; i++)
-    {
-    matriz[1][i];
+        
     }
-}
+
+    if(line <= column)         // Quando o número de linhas é menor ou igual ao número de colunas, ex.: Matriz(2x3) ou Matriz(3x3) 
+    {
+        for (int i = 0; i < line; i++)
+        {
+        matriz[1][i];
+        }
+    }
 }
 
 double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
