@@ -1,7 +1,11 @@
 #include "Matriz.hpp"
 
+Matriz temp;
+
 Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
 {
+    if(line < 0) line *= -1;
+    if(column < 0) column *= -1;
     //Definindo os atributos de linha e coluna;
     this->line = line;
     this->column = column;
@@ -15,6 +19,7 @@ Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tama
 
 Matriz::Matriz(int Order) //Construtor para matrizes de ordem pré-definida
 {   
+    if(Order < 0) Order *= -1;
     //Definindo os atributos de linha e coluna;
     this->line = Order;
     this->column = Order;
@@ -72,6 +77,13 @@ void Matriz::fill() //Método para preenchimento manual de matrizes;
 
 void Matriz::fillrand(double min, double max) //Método para preenchimento randomico de matrizes;
 {
+    if(min > max)
+    {
+        double temp = min;
+        min = max;
+        max = temp;
+    }
+
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -85,6 +97,13 @@ void Matriz::imprimir() //Método para imprimir todos os atrinutos do objeto.
          << "\nNúmero de colunas: " << this->column << endl
          << *this
          << "\nMatriz diagonal:" << diagonal_check();
+}
+
+void Matriz::trocalinha(int i, int linechange)
+{
+    double *ptraux = matriz[i];
+    matriz[i] = matriz[linechange];
+    matriz[linechange] = ptraux;
 }
 
 bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
@@ -116,12 +135,21 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 void Matriz::gaussian_elimination() //Ainda falta fazer
 {
     double coefficient = 1;
-    if(line > column)          //Quando o número de linha é maior que o número de colunas de colunas, ex.: Matriz(3x2)
-    {
         //Pivotização;
-        for (int i = 0; i < column; i++) //Utiliza um quadrado baseado na quantidade de colunas;
-            for (int k = i + 1; k < column; k++) //Linha abaixo
+        for (int i = 0; i < line; i++) //Utiliza um quadrado baseado na quantidade de colunas;
+            for (int k = i + 1; k <= line; k++) //Linha abaixo
             {
+                //coefficient = 1;
+                /*if(matriz[0][0] == 0)
+                {
+                    for (int f = i + 1; f < line; f++)
+                    {
+                        if(matriz[f][i] != 0)
+                        {
+                            trocalinha(i , f);
+                        }
+                    }
+                }*/
                 if(matriz[i][i] > 0)
                 {
                     coefficient = matriz[k][i] / matriz[i][i];
@@ -129,7 +157,7 @@ void Matriz::gaussian_elimination() //Ainda falta fazer
 
                 if(matriz[i][i] < 0)
                 {
-                    coefficient = -1 * (matriz[k][i] / matriz[i][i]);
+                    coefficient = (-1) * (matriz[k][i] / matriz[i][i]);
                 }
 
                 for(int j = 0; j < column; j++)
@@ -138,16 +166,7 @@ void Matriz::gaussian_elimination() //Ainda falta fazer
                 }
 
             }
-        
-    }
-
-    if(line <= column)         // Quando o número de linhas é menor ou igual ao número de colunas, ex.: Matriz(2x3) ou Matriz(3x3) 
-    {
-        for (int i = 0; i < line; i++)
-        {
-        matriz[1][i];
-        }
-    }
+        cout << *this;  
 }
 
 double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
@@ -172,7 +191,7 @@ double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
 double *Matriz::operator[](int i) //Acessa um índice da matriz.
 {
 
-    if (i <= 0 || i < this->line)
+    if (i >= 0 || i < this->line)
     {
         return this->matriz[i]; //Retorno de um ponteiro.
     }
@@ -183,15 +202,16 @@ double *Matriz::operator[](int i) //Acessa um índice da matriz.
 
 Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 {
+    temp = *this;
     if (this->line == other.line && this->column == other.column) //Verifca a possibilidade de realizar a operação;
     {
         for (int i = 0; i < this->line; i++)
             for (int j = 0; j < this->column; j++)
             {
-                this->matriz[i][j] += other.matriz[i][j];
+                temp.matriz[i][j] += other.matriz[i][j];
             }
 
-        return *this; //Retorna o próprio objeto;
+        return temp; //Retorna o próprio objeto;
     }
 
     cerr << "\nThe matrix cannot be summed!";
@@ -213,12 +233,13 @@ Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes
             this->matriz[i][j] -= other.matriz[i][j];
         }
 
-    return *this; //Retorna o próprio objeto;
+    return temp; //Retorna o objeto temp;
 }
 
 Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
 {
-    Matriz temp(this->line, other.column); //Objeto temporário para receber os valores da multiplicação;
+
+    Matriz resultado(this->line, other.column); //Objeto temporário para receber os valores da multiplicação;
 
     if (this->column != other.line) //Condição para multiplicar 2 matrizes.
     {
@@ -231,12 +252,11 @@ Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
     {
         for (int k = 0; k < this->column; k++)//Percorre a linha da primeira matriz junto a coluna da segunda matriz;
         {
-            temp.matriz[i][j] += (this->matriz[i][k] * other.matriz[k][j]); //Somatório das multiplicações índice à índice para atribuição dos valores da matriz resulante;
+            resultado.matriz[i][j] += (this->matriz[i][k] * other.matriz[k][j]); //Somatório das multiplicações índice à índice para atribuição dos valores da matriz resulante;
         }
     }
-
-    *this = temp; //O objeto recebe os valores do objeto temporário;
-    return *this; //Retorna o próprio objeto;
+    temp = resultado;
+    return temp; //Retorna o objeto temp;
 }
 
 
@@ -275,7 +295,7 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
                 this->matriz[i][j] = other.matriz[i][j];
             }
 
-        return *this; //Retorna o próprio objeto;
+        return *this; //Retorna o objeto temp;
     }
 
     cerr << "\nThey are the same matrix!";
@@ -285,35 +305,38 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
 
 Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à esquerda;
 {
+    temp = *this;
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            this->matriz[i][j] += num;
+            temp.matriz[i][j] += num;
         }
 
-    return *this; //Retorna o próprio objeto;
+    return temp; //Retorna o objeto temp;
 }
 
 Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o objeto à esquerda;
 {
+    temp = *this;
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            this->matriz[i][j] -= num;
+            temp.matriz[i][j] -= num;
         }
 
-    return *this; //Retorna o próprio objeto;
+    return temp; //Retorna o objeto temp;
 }
 
 Matriz &Matriz::operator*(double num) //Multiplicação de matrize e escalar com o objeto à esquerda;
 {
+    temp = *this;
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            this->matriz[i][j] *= num;
+            temp.matriz[i][j] *= num;
         }
 
-    return *this; //Retorna o próprio objeto;
+    return temp; //Retorna o objeto temp;
 }
 
 ostream &operator<<(ostream &output, const Matriz &right) //Operador de inserção de fluxo;
@@ -355,13 +378,8 @@ Matriz &operator+(const double num, Matriz &right) //Soma de matriz e escalar, c
 }
 
 Matriz &operator-(const double num, Matriz &right) //Subtração de matriz e escalar, com objeto à direita;
-{
-    for (int i = 0; i < right.line; i++)
-        for (int j = 0; j < right.column; j++)
-        {
-            right.matriz[i][j] = num - right.matriz[i][j];
-        }
-    return right; //Retorna a matriz objeto da classe;
+{   temp = right * -1;
+    return (temp + num); //Retorna a matriz objeto da classe;
 }
 
 Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e escalar, com objeto à direita;

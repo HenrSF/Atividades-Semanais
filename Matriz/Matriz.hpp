@@ -37,7 +37,7 @@ public:
     Matriz(int = 3);                 //Constructor matriz quadrada;
     Matriz(const Matriz &other);     //Copy Constructor; 
     ~Matriz();                       //Destructor;
-
+    void trocalinha(int line, int linechange);
     void imprimir();                       //Mostra os elementos da matriz;
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;

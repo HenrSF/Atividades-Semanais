@@ -4,19 +4,20 @@ int main()
 {
 srand(time(NULL));
 
-Matriz matrizA(5, 4);
+Matriz matrizA;
 Matriz matrizB;
-Matriz matrizC;
+//Matriz matrizC;
 
-matrizA.fill();
-//matrizB.fill();
+matrizA.fillrand(0, 10);
+matrizB.fillrand(0, 10);
 //matrizC.fill();
 
+//cout << matrizA;
+cout << matrizB;
 //Matriz matrizD = matrizA;
- 
-matrizA.gaussian_elimination();
+//Matriz matrizC(2 + matrizB);
 
-cout << matrizA;
+cout << matrizB;
 
   return 0;   
 }
