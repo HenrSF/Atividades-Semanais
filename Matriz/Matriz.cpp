@@ -1,7 +1,5 @@
 #include "Matriz.hpp"
-
-Matriz temp;
-
+//Matriz temp;
 Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
 {
     if(line < 0) line *= -1;
@@ -221,6 +219,7 @@ Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 
 Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes 
 {
+    temp = *this;
     if (this->line != other.line && this->column != other.column) //Verifca a possibilidade de realizar a operação;
     {
         cerr << "\nThe matrix cannot be subtracted!";
@@ -230,7 +229,7 @@ Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
-            this->matriz[i][j] -= other.matriz[i][j];
+            temp.matriz[i][j] -= other.matriz[i][j];
         }
 
     return temp; //Retorna o objeto temp;
@@ -262,6 +261,7 @@ Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
 
 const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outra;
 {
+    cout << "\n Entrei no operator=";
     //Verifica se tem o mesmo endereço
     if (&other != this)
     {
@@ -295,7 +295,7 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
                 this->matriz[i][j] = other.matriz[i][j];
             }
 
-        return *this; //Retorna o objeto temp;
+        return *this; //Retorna o próprio objeto;
     }
 
     cerr << "\nThey are the same matrix!";
@@ -378,8 +378,9 @@ Matriz &operator+(const double num, Matriz &right) //Soma de matriz e escalar, c
 }
 
 Matriz &operator-(const double num, Matriz &right) //Subtração de matriz e escalar, com objeto à direita;
-{   temp = right * -1;
-    return (temp + num); //Retorna a matriz objeto da classe;
+{ 
+    right = right * -1;
+    return right + num; //Retorna a matriz objeto da classe;
 }
 
 Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e escalar, com objeto à direita;

@@ -72,6 +72,8 @@ public:
     friend Matriz &operator* (double num, Matriz &right);                    //Multiplicação por escalar;
 };
 
+Matriz temp;
+
 #endif
 
-//Uso de referência como retorno.
+
