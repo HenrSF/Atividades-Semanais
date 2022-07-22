@@ -1,5 +1,5 @@
 #include "Matriz.hpp"
-//Matriz temp;
+Matriz temp;
 Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
 {
     if(line < 0) line *= -1;
@@ -104,6 +104,14 @@ void Matriz::trocalinha(int i, int linechange)
     matriz[linechange] = ptraux;
 }
 
+void Matriz::jump_end(int line)
+{
+    for(int i = line; i < this->line-1; i++)
+    {
+        trocalinha(i, i+1);
+    }
+}
+
 bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 {
     int cont = 0;
@@ -132,39 +140,34 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 
 void Matriz::gaussian_elimination() //Ainda falta fazer
 {
-    double coefficient = 1;
-        //Pivotização;
-        for (int i = 0; i < line; i++) //Utiliza um quadrado baseado na quantidade de colunas;
-            for (int k = i + 1; k <= line; k++) //Linha abaixo
+    //Tratamento de zeros (realocação dentro da matriz);
+    for (int i = 0; i < line; i++)
+    {
+        for (int k = 0; k < i; k++)
+        {
+            for (int test = 0; test <= line; test++)
+            if(matriz[i+k][i] == 0)
             {
-                //coefficient = 1;
-                /*if(matriz[0][0] == 0)
-                {
-                    for (int f = i + 1; f < line; f++)
-                    {
-                        if(matriz[f][i] != 0)
-                        {
-                            trocalinha(i , f);
-                        }
-                    }
-                }*/
-                if(matriz[i][i] > 0)
-                {
-                    coefficient = matriz[k][i] / matriz[i][i];
-                }
-
-                if(matriz[i][i] < 0)
-                {
-                    coefficient = (-1) * (matriz[k][i] / matriz[i][i]);
-                }
-
-                for(int j = 0; j < column; j++)
-                {
-                    matriz[k][j] -= coefficient * matriz[i][j];
-                }
-
+                jump_end(i+k);
             }
-        cout << *this;  
+
+        }
+    }
+    
+    for (int i = 0; i < line; i++)
+    {
+        for (int k = 0; k < line; k++)
+        {
+            if(matriz[i][i] != 0)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    matriz[k][j] = matriz[k][j] / matriz[i][k];
+                }
+            }
+        }
+    }
+    cout << *this;  
 }
 
 double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
@@ -387,3 +390,37 @@ Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e
 {
     return (right * num);
 }
+
+    /*
+    double coefficient = 1;
+        //Pivotização;
+        for (int i = 0; i < line; i++) //Utiliza um quadrado baseado na quantidade de colunas;
+            for (int k = i + 1; k <= line; k++) //Linha abaixo
+            {
+                //coefficient = 1;
+                /*if(matriz[0][0] == 0)
+                {
+                    for (int f = i + 1; f < line; f++)
+                    {
+                        if(matriz[f][i] != 0)
+                        {
+                            trocalinha(i , f);
+                        }
+                    }
+                if(matriz[i][i] > 0)
+                {
+                    coefficient = matriz[k][i] / matriz[i][i];
+                }
+
+                if(matriz[i][i] < 0)
+                {
+                    coefficient = (-1) * (matriz[k][i] / matriz[i][i]);
+                }
+
+                for(int j = 0; j < column; j++)
+                {
+                    matriz[k][j] -= coefficient * matriz[i][j];
+                }
+
+            }
+            */

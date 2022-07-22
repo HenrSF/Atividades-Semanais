@@ -31,13 +31,16 @@ private:
     int line, column;
     double **matriz;
 
+    void trocalinha(int line, int linechange);
+
 public:
 
     Matriz(int line, int column);    //Constructor matriz qualquer;
     Matriz(int = 3);                 //Constructor matriz quadrada;
     Matriz(const Matriz &other);     //Copy Constructor; 
     ~Matriz();                       //Destructor;
-    void trocalinha(int line, int linechange);
+    
+    void jump_end(int line);         //Joga a linha para a última posição
     void imprimir();                       //Mostra os elementos da matriz;
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
@@ -71,8 +74,6 @@ public:
     friend Matriz &operator- (double num, Matriz &right);                    //Subtração por escalar;
     friend Matriz &operator* (double num, Matriz &right);                    //Multiplicação por escalar;
 };
-
-Matriz temp;
 
 #endif
 
