@@ -97,21 +97,6 @@ void Matriz::imprimir() //Método para imprimir todos os atrinutos do objeto.
          << "\nMatriz diagonal:" << diagonal_check();
 }
 
-void Matriz::trocalinha(int i, int linechange)
-{
-    double *ptraux = matriz[i];
-    matriz[i] = matriz[linechange];
-    matriz[linechange] = ptraux;
-}
-
-void Matriz::jump_end(int line)
-{
-    for(int i = line; i < this->line-1; i++)
-    {
-        trocalinha(i, i+1);
-    }
-}
-
 bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 {
     int cont = 0;
@@ -138,31 +123,67 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
     return false;
 }
 
+void Matriz::trocalinha(int i, int linechange)
+{
+    double *ptraux = matriz[i];
+    matriz[i] = matriz[linechange];
+    matriz[linechange] = ptraux;
+}
+
+void Matriz::jump_end(int line)
+{
+    for(int i = line; i < this->line-1; i++)
+    {
+        trocalinha(i, i+1);
+    }
+}
+
 void Matriz::gaussian_elimination() //Ainda falta fazer
 {
     //Tratamento de zeros (realocação dentro da matriz);
     for (int i = 0; i < line; i++)
     {
-        for (int k = 0; k < i; k++)
+        for (int k = i; k < line; k++)
         {
-            for (int test = 0; test <= line; test++)
-            if(matriz[i+k][i] == 0)
+            for (int test = 0; test < line; test++)
             {
-                jump_end(i+k);
+                if(matriz[k][i] == 0)
+                {
+                    jump_end(k);
+                }
+                /*
+                if(test == line - 1)
+                {
+                    i++;
+                }
+                */
             }
 
+            if(matriz[k][i] < 0)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    matriz[k][j] *= -1;
+                }
+            }
         }
     }
     
     for (int i = 0; i < line; i++)
     {
-        for (int k = 0; k < line; k++)
+        for (int k = i; k < line; k++)
         {
-            if(matriz[i][i] != 0)
+            if(matriz[k][i] != 0)
             {
                 for (int j = 0; j < column; j++)
                 {
-                    matriz[k][j] = matriz[k][j] / matriz[i][k];
+                    matriz[k][j] /= matriz[k][i];
+                }
+
+                for (int j = 0; j < column; j++)
+                {
+                    if(k == 0) continue;
+                    matriz[k][j] = matriz[i][j] - matriz[k][j];
                 }
             }
         }

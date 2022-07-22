@@ -31,8 +31,8 @@ private:
     int line, column;
     double **matriz;
 
-    void trocalinha(int line, int linechange);
-
+    void trocalinha(int line, int linechange);  //Troca duas linha entre;
+    void jump_end(int line);                    //Joga a linha para a última posição;
 public:
 
     Matriz(int line, int column);    //Constructor matriz qualquer;
@@ -40,7 +40,7 @@ public:
     Matriz(const Matriz &other);     //Copy Constructor; 
     ~Matriz();                       //Destructor;
     
-    void jump_end(int line);         //Joga a linha para a última posição
+    
     void imprimir();                       //Mostra os elementos da matriz;
     void fill();                           //Preencher a matriz manual;
     void fillrand(double min, double max); //Preencher a matriz randon;
