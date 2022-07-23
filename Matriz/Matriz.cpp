@@ -155,7 +155,7 @@ void Matriz::zero_fix(int n) // busca um elemento diferente de zero.
 void Matriz::gaussian_elimination() //Ainda falta fazer;
 {   
     int y = 0;
-
+    //Caso da coluna igual a 0, o pivô muda de coluna mas permanece na mesma linha;
     for (int i = 0; i < line; i++)
     {
         for(int x = 1; x < line; x++)
