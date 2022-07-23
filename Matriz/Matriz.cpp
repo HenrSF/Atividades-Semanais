@@ -1,5 +1,7 @@
 #include "Matriz.hpp"
-Matriz temp;
+
+Matriz temp; //Não consigo utilizar o cascateamento de operator com esse retorno;
+
 Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
 {
     if(line < 0) line *= -1;
@@ -132,61 +134,53 @@ void Matriz::trocalinha(int i, int linechange)
 
 void Matriz::jump_end(int line)
 {
-    for(int i = line; i < this->line-1; i++)
+    for(int i = line; i < this->line - 1; i++) // (line - 1) para evitar trocar com uma linha inexistente 
     {
         trocalinha(i, i+1);
     }
 }
 
-void Matriz::gaussian_elimination() //Ainda falta fazer
+void Matriz::zero_fix(int n) // busca um elemento diferente de zero.
 {
-    //Tratamento de zeros (realocação dentro da matriz);
+        for(int j = 0; j < line; j++)
+        {   
+            for (int i = 0; i < line; i++)
+            if(matriz[j][n] == 0)
+            {
+                jump_end(j);
+            } 
+        }
+}
+
+void Matriz::gaussian_elimination() //Ainda falta fazer;
+{   
+    int y = 0;
+
     for (int i = 0; i < line; i++)
     {
+        for(int x = 1; x < line; x++)
+        {   
+            if(i == 0) break;
+            for (int j = 0; j < column; j++)
+            {
+                matriz[x][j] = matriz[x][j] - matriz[i-1][j];
+            }
+            cout << *this;
+        }
+
         for (int k = i; k < line; k++)
         {
-            for (int test = 0; test < line; test++)
-            {
-                if(matriz[k][i] == 0)
-                {
-                    jump_end(k);
+                if(matriz[k][i] != 0)
+                {   
+                    y = matriz[k][i]; // dúvida
+                    for (int j = 0; j < column; j++)
+                    {
+                        matriz[k][j] /= y;
+                    }
+                    cout << *this;
                 }
-                /*
-                if(test == line - 1)
-                {
-                    i++;
-                }
-                */
-            }
-
-            if(matriz[k][i] < 0)
-            {
-                for (int j = 0; j < column; j++)
-                {
-                    matriz[k][j] *= -1;
-                }
-            }
         }
-    }
-    
-    for (int i = 0; i < line; i++)
-    {
-        for (int k = i; k < line; k++)
-        {
-            if(matriz[k][i] != 0)
-            {
-                for (int j = 0; j < column; j++)
-                {
-                    matriz[k][j] /= matriz[k][i];
-                }
-
-                for (int j = 0; j < column; j++)
-                {
-                    if(k == 0) continue;
-                    matriz[k][j] = matriz[i][j] - matriz[k][j];
-                }
-            }
-        }
+        zero_fix(i);
     }
     cout << *this;  
 }
@@ -224,7 +218,10 @@ double *Matriz::operator[](int i) //Acessa um índice da matriz.
 
 Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 {
+    if (this != &temp)
+    {
     temp = *this;
+    }
     if (this->line == other.line && this->column == other.column) //Verifca a possibilidade de realizar a operação;
     {
         for (int i = 0; i < this->line; i++)
@@ -243,7 +240,10 @@ Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 
 Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes 
 {
+    if (this != &temp)
+    {
     temp = *this;
+    }
     if (this->line != other.line && this->column != other.column) //Verifca a possibilidade de realizar a operação;
     {
         cerr << "\nThe matrix cannot be subtracted!";
@@ -329,7 +329,11 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
 
 Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à esquerda;
 {
+    
+    if (this != &temp)
+    {
     temp = *this;
+    }
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -341,7 +345,10 @@ Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à
 
 Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o objeto à esquerda;
 {
+    if (this != &temp)
+    {
     temp = *this;
+    }
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -353,7 +360,10 @@ Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o ob
 
 Matriz &Matriz::operator*(double num) //Multiplicação de matrize e escalar com o objeto à esquerda;
 {
+    if (this != &temp)
+    {
     temp = *this;
+    }
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {

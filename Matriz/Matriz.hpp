@@ -33,6 +33,7 @@ private:
 
     void trocalinha(int line, int linechange);  //Troca duas linha entre;
     void jump_end(int line);                    //Joga a linha para a última posição;
+    void zero_fix(int n);                            //Correção dos zeros nas colunas, para escalonamento;
 public:
 
     Matriz(int line, int column);    //Constructor matriz qualquer;
