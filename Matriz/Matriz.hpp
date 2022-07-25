@@ -30,10 +30,12 @@ private:
     
     int line, column;
     double **matriz;
+    double *ptraux;
 
-    void trocalinha(int line, int linechange);  //Troca duas linha entre;
+    void trocalinha(int line, int linechange);  //Troca duas linha entre si;
     void jump_end(int line);                    //Joga a linha para a última posição;
-    void zero_fix(int n);                            //Correção dos zeros nas colunas, para escalonamento;
+    void zero_fix(int n);                       //Correção dos zeros nas colunas para escalonamento;
+
 public:
 
     Matriz(int line, int column);    //Constructor matriz qualquer;
@@ -54,13 +56,13 @@ public:
     double **getmatriz();              //Retorna uma cópia do atributo matriz;
     
     //Operator subscrito:
-    double *operator[] (int i); //Retornar valor;
+    double *operator[] (int i); //Retorna um ponteiro em forma de vetor para selecionando uma posição;
 
     //Operator entre objetos:
     Matriz &operator+ (const Matriz &other);         //Soma matricial;
     Matriz &operator- (const Matriz &other);         //Subtração matricial;
     Matriz &operator* (const Matriz &other);         //Multiplicação matricial;
-    const Matriz &operator= (const Matriz &other);   //Cópiar matriz; --> Poderia usar o efeito de cascata para método?
+    const Matriz &operator= (const Matriz &other);   //Copiar matriz;
 
     //Operator para o objeto como lvalue modificável:
     Matriz &operator+ (const double num);                //Soma por escalar;

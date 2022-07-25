@@ -1,9 +1,10 @@
 #include "Matriz.hpp"
 
-Matriz temp; //Não consigo utilizar o cascateamento de operator com esse retorno;
+Matriz temp; //Objeto temporário para ser retornado sem modificar o objeto que chama o método 
 
-Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tamanho;
+Matriz::Matriz(int line, int column) //Construtor para matrizes de n tamanho;
 {
+    //Mudando o sinal para evitar valores negativos nos atributos line e column;
     if(line < 0) line *= -1;
     if(column < 0) column *= -1;
     //Definindo os atributos de linha e coluna;
@@ -19,6 +20,7 @@ Matriz::Matriz(int line, int column) //Construtor para matrizes de qualquer tama
 
 Matriz::Matriz(int Order) //Construtor para matrizes de ordem pré-definida
 {   
+    //Mudando o sinal para evitar valores negativos nos atributos line e column;
     if(Order < 0) Order *= -1;
     //Definindo os atributos de linha e coluna;
     this->line = Order;
@@ -62,8 +64,6 @@ Matriz::~Matriz() //Destrutor
     delete[] this->matriz; //Desalocando a matriz;
 
     this->matriz = nullptr; //Ponteiro nulo;
-
-    cout << "\nThe Matrix has been destroyed.";
 }
 
 void Matriz::fill() //Método para preenchimento manual de matrizes;
@@ -77,7 +77,7 @@ void Matriz::fill() //Método para preenchimento manual de matrizes;
 
 void Matriz::fillrand(double min, double max) //Método para preenchimento randomico de matrizes;
 {
-    if(min > max)
+    if(min > max) //Troca as variáveis para manter o min < max;
     {
         double temp = min;
         min = max;
@@ -91,7 +91,7 @@ void Matriz::fillrand(double min, double max) //Método para preenchimento rando
         }
 }
 
-void Matriz::imprimir() //Método para imprimir todos os atrinutos do objeto.
+void Matriz::imprimir() //Método para imprimir todos os atributos do objeto.
 {
     cout << "\nNúmero de linhas: " << this->line
          << "\nNúmero de colunas: " << this->column << endl
@@ -101,7 +101,7 @@ void Matriz::imprimir() //Método para imprimir todos os atrinutos do objeto.
 
 bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
 {
-    int cont = 0;
+    int cont = 0; //Contoador para verificar a quantidade de zeros fora da diagonal principal da matriz;
 
     if (line == column) //Verificar se a matriz é quadrada;
     {
@@ -125,64 +125,78 @@ bool Matriz::diagonal_check() //Verificar se a matriz é diagonal;
     return false;
 }
 
-void Matriz::trocalinha(int i, int linechange)
-{
-    double *ptraux = matriz[i];
+void Matriz::trocalinha(int i, int linechange) //Método que utiliza um ponteiro auxiliar para trocar linhas
+{   
+    //É possível desalocar a memória desse ponteiro?
+    ptraux = matriz[i];
     matriz[i] = matriz[linechange];
     matriz[linechange] = ptraux;
 }
 
-void Matriz::jump_end(int line)
+void Matriz::jump_end(int line) //Transfere uma linha da matriz para a última posição;
 {
-    for(int i = line; i < this->line - 1; i++) // (line - 1) para evitar trocar com uma linha inexistente 
+    for(int i = line; i < line - 1; i++) //(line - 1) para evitar trocar com uma linha inexistente;
     {
-        trocalinha(i, i+1);
+        trocalinha(i, i+1); //Troca a linha i, com a linha abaixo;
     }
 }
 
-void Matriz::zero_fix(int n) // busca um elemento diferente de zero.
+void Matriz::zero_fix(int n) //Reajusta os zeros da coluna da matriz no escalonamento;
 {
-        for(int j = 0; j < line; j++)
-        {   
-            for (int i = 0; i < line; i++)
-            if(matriz[j][n] == 0)
-            {
-                jump_end(j);
-            } 
-        }
-}
-
-void Matriz::gaussian_elimination() //Ainda falta fazer;
-{   
-    int y = 0;
-    //Caso da coluna igual a 0, o pivô muda de coluna mas permanece na mesma linha;
-    for (int i = 0; i < line; i++)
-    {
-        for(int x = 1; x < line; x++)
-        {   
-            if(i == 0) break;
-            for (int j = 0; j < column; j++)
-            {
-                matriz[x][j] = matriz[x][j] - matriz[i-1][j];
-            }
-            cout << *this;
-        }
-
-        for (int k = i; k < line; k++)
+    for(int j = 0; j < line; j++)
+    {   
+        for (int i = 0; i < line; i++)
+        if(matriz[i][n] == 0) //Caso o elemento da matriz seja zero, transfere a linha para o final da matriz;
         {
-                if(matriz[k][i] != 0)
-                {   
-                    y = matriz[k][i]; // dúvida
-                    for (int j = 0; j < column; j++)
-                    {
-                        matriz[k][j] /= y;
-                    }
-                    cout << *this;
-                }
-        }
-        zero_fix(i);
+            jump_end(i); 
+        } 
     }
-    cout << *this;  
+}
+
+void Matriz::gaussian_elimination()
+{   
+    //Variáveis para casos de colunas inteiras igual a 0;
+    int zero_control;
+    int l = 0; //Variável para avançar a coluna permanecendo na mesma linha;
+    
+    for (int i = 0; i < line + l; i++) //Percorre as colunas da matriz, considerando apenas a formação do triângulo inferior;
+    {   
+        zero_control = 0; //Reseta a variável;
+
+        for (int k = i - l; k < line; k++) //Laço de repetição que realiza as divisões;
+        {
+            if(matriz[k][i] != 0) //Se o elemento for diferente de zero, realiza a divisão;
+            {
+                zero_control++; //Conta valores diferentes de zero;
+
+                for (int j = column - 1; j >= 0; j--) //Percorre de forma decrescente, realizando divisões pelo primeiro elemento da coluna atual;
+                {
+                    matriz[k][j] /= matriz[k][i];
+                }
+            }
+        }
+
+        if(zero_control > 0) zero_fix(i); //Se houver algum zero na coluna, chama o método de correção de zeros;
+        
+
+        for(int x = i - l + 1; x < line; x++) //Subtração entre as linhas;
+        {   
+            if(zero_control == 0) //Se todos os elemento da coluna abaixo do pivô forem iguais a zero, avança para a próxima coluna, sem realizar as subtrações;
+            {
+                l++; //Serve para permanecer na mesma linha;
+                break;
+            }
+
+            if (matriz[x][i] == 0) break; //Se o pivô for igual a zero, avança para a próxima coluna sem realizar a subtração;
+
+            for (int j = 0; j < column; j++) //Realiza a subtração da linha atual, pelo linha pivô anteriormente estabelecida;
+            {
+                matriz[x][j] -= matriz[i-l][j];
+            }
+        }
+
+        if(zero_control > 0) zero_fix(i); //Realiza a correção de zeros novamente;
+    }
 }
 
 double **Matriz::getmatriz() //Obter o atributo matriz do objeto;
@@ -218,10 +232,8 @@ double *Matriz::operator[](int i) //Acessa um índice da matriz.
 
 Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 {
-    if (this != &temp)
-    {
-    temp = *this;
-    }
+    if (this != &temp) temp = *this; //Temp só recebe o objeto se o objeto não for o próprio temp;
+
     if (this->line == other.line && this->column == other.column) //Verifca a possibilidade de realizar a operação;
     {
         for (int i = 0; i < this->line; i++)
@@ -240,10 +252,8 @@ Matriz &Matriz::operator+(const Matriz &other) //Soma de matrizes;
 
 Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes 
 {
-    if (this != &temp)
-    {
-    temp = *this;
-    }
+    if (this != &temp) temp = *this; //Temp só recebe o objeto se o objeto não for o próprio temp;
+
     if (this->line != other.line && this->column != other.column) //Verifca a possibilidade de realizar a operação;
     {
         cerr << "\nThe matrix cannot be subtracted!";
@@ -261,14 +271,13 @@ Matriz &Matriz::operator-(const Matriz &other) //Subtração de matrizes
 
 Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
 {
-
-    Matriz resultado(this->line, other.column); //Objeto temporário para receber os valores da multiplicação;
-
     if (this->column != other.line) //Condição para multiplicar 2 matrizes.
     {
         cerr << "\nThe matrix cannot be multiplied!";
         exit(EXIT_FAILURE);
     }
+
+    Matriz resultado(this->line, other.column); //Cria um bjeto para receber os valores da multiplicação;
     //Algorotímo para efetuar a multiplicação de matrizes;
     for (int i = 0; i < this->line; i++)
     for (int j = 0; j < other.column; j++)
@@ -285,7 +294,6 @@ Matriz &Matriz::operator*(const Matriz &other) //Multiplicação de matrizes;
 
 const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outra;
 {
-    cout << "\n Entrei no operator=";
     //Verifica se tem o mesmo endereço
     if (&other != this)
     {
@@ -319,7 +327,7 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
                 this->matriz[i][j] = other.matriz[i][j];
             }
 
-        return *this; //Retorna o próprio objeto;
+        return *this; //Retorna o próprio objeto, permitindo o efeito cascata;
     }
 
     cerr << "\nThey are the same matrix!";
@@ -330,10 +338,8 @@ const Matriz &Matriz::operator=(const Matriz &other) //Iguala uma matriz à outr
 Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à esquerda;
 {
     
-    if (this != &temp)
-    {
-    temp = *this;
-    }
+    if (this != &temp) temp = *this; //Temp só recebe o objeto se o objeto não for o próprio temp;
+
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -345,10 +351,8 @@ Matriz &Matriz::operator+(double num) //Soma de matriz e escalar com o objeto à
 
 Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o objeto à esquerda;
 {
-    if (this != &temp)
-    {
-    temp = *this;
-    }
+    if (this != &temp) temp = *this; //Temp só recebe o objeto se o objeto não for o próprio temp;
+
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -358,12 +362,10 @@ Matriz &Matriz::operator-(double num) //Subtração de matriz e escalar com o ob
     return temp; //Retorna o objeto temp;
 }
 
-Matriz &Matriz::operator*(double num) //Multiplicação de matrize e escalar com o objeto à esquerda;
+Matriz &Matriz::operator*(double num) //Multiplicação de matriz e escalar com o objeto à esquerda;
 {
-    if (this != &temp)
-    {
-    temp = *this;
-    }
+    if (this != &temp) temp = *this; //Temp só recebe o objeto se o objeto não for o próprio temp;
+
     for (int i = 0; i < line; i++)
         for (int j = 0; j < column; j++)
         {
@@ -408,50 +410,15 @@ istream &operator>>(istream &input, Matriz &right) //Operador de extração de f
 
 Matriz &operator+(const double num, Matriz &right) //Soma de matriz e escalar, com objeto à direita; 
 {
-    return (right + num);
+    return right + num;
 }
 
 Matriz &operator-(const double num, Matriz &right) //Subtração de matriz e escalar, com objeto à direita;
 { 
-    right = right * -1;
-    return right + num; //Retorna a matriz objeto da classe;
+    return right * -1 + num; //Retorna a matriz objeto da classe;
 }
 
 Matriz &operator*(const double num, Matriz &right) //Multiplicação de matriz e escalar, com objeto à direita;
 {
-    return (right * num);
-}
-
-    /*
-    double coefficient = 1;
-        //Pivotização;
-        for (int i = 0; i < line; i++) //Utiliza um quadrado baseado na quantidade de colunas;
-            for (int k = i + 1; k <= line; k++) //Linha abaixo
-            {
-                //coefficient = 1;
-                /*if(matriz[0][0] == 0)
-                {
-                    for (int f = i + 1; f < line; f++)
-                    {
-                        if(matriz[f][i] != 0)
-                        {
-                            trocalinha(i , f);
-                        }
-                    }
-                if(matriz[i][i] > 0)
-                {
-                    coefficient = matriz[k][i] / matriz[i][i];
-                }
-
-                if(matriz[i][i] < 0)
-                {
-                    coefficient = (-1) * (matriz[k][i] / matriz[i][i]);
-                }
-
-                for(int j = 0; j < column; j++)
-                {
-                    matriz[k][j] -= coefficient * matriz[i][j];
-                }
-
-            }
-            */
+    return right * num;
+}                     

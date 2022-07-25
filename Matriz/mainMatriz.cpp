@@ -4,23 +4,21 @@ int main()
 {
 srand(time(NULL));
 
-Matriz matrizA(4);
-//Matriz matrizB;
-//Matriz matrizC;
+Matriz matrizA;
+Matriz matrizB;
 
-matrizA.fill();
-//matrizB.fillrand(0, 10);
-//matrizC.fill();
+matrizA.fillrand(-10, 10);
+matrizB.fillrand(0, 10);
 
-//cout << matrizA;
 cout << matrizA;
+cout << matrizB;
 //Matriz matrizD = matrizA;
 //Matriz matrizC(2 + matrizB);
 
 matrizA.gaussian_elimination();
 
-//Matriz matrizB = matrizA * matrizA * matrizA + matrizA - 50;
-//cout << matrizB;
-//cout << matrizA;
+matrizB = (20 - matrizB); //* matrizA * matrizA + matrizA - 50;
+cout << matrizB;
+
   return 0;   
 }
