@@ -16,8 +16,9 @@ cout << matrizB;
 //Matriz matrizC(2 + matrizB);
 
 matrizA.gaussian_elimination();
+cout << matrizA;
 
-matrizB = (20 - matrizB); //* matrizA * matrizA + matrizA - 50;
+matrizB = (20 - matrizB) * matrizB * 10 + (matrizA - 50);
 cout << matrizB;
 
   return 0;   
