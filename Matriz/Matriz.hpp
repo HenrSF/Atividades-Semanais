@@ -23,7 +23,7 @@ using std::fixed;
 
 #include <ctime>
 using std::time;
-
+//Adicionar método para escalonamento gauss-jordan;
 class Matriz
 {
 private:
