@@ -1,0 +1,4 @@
+//Peso máximo de cada tipo de animal, atributo estático.
+
+//Contagem de animas na fazendo: soma da quantidade de cada tipo de animal
+

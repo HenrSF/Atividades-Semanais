@@ -2,7 +2,8 @@
 #define FARM_HPP
 
 using namespace std;
-#include <string>
+
+#include "Animals.hpp"
 #include <vector>
 
 class Farm

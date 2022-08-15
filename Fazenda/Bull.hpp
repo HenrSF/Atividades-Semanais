@@ -5,9 +5,8 @@
 
 class Bull : public Animals
 {
-    public:  
-      virtual string sound(); 
-      virtual bool displacement ();
+    public: 
+      virtual void displacement ();
       virtual float eat ();
       virtual float mass();
       virtual float price ();
@@ -18,5 +17,6 @@ class Bull : public Animals
 
     private:
         int weight;
+        static double price_kg;
 };
 #endif

@@ -4,19 +4,28 @@
 using namespace std;
 
 #include <string>
-#include "Farm.hpp"
+#include <iostream>
+#include <iomanip>
 
-class Animals : public Farm
+class Animals
 {
     public:
+
       virtual string sound () = 0;
-      virtual bool displacement () = 0;
+      virtual void displacement () = 0;
       virtual float eat () = 0;
       virtual float mass() = 0;
       virtual float price () = 0;
-      virtual void print () = 0; 
+      virtual void print () = 0;
+
+      //Methods get:
+
+      //Methods set:
       
     private:
 
+      float mass;
+      string gender;
+      float weight;
 };
 #endif
