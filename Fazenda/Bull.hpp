@@ -6,17 +6,16 @@
 class Bull : public Animals
 {
     public: 
+      Bull(Gender gender, float weight);
+
       virtual void displacement ();
       virtual float eat ();
-      virtual float mass();
       virtual float price ();
       virtual void print ();
     
-    void set_weight(int );
-    int get_weight() const;
+      virtual void set_weight(float );
 
     private:
-        int weight;
-        static double price_kg;
+        static float price_kg;
 };
 #endif

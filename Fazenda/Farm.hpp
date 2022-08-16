@@ -4,7 +4,7 @@
 using namespace std;
 
 #include "Animals.hpp"
-#include <vector>
+#include <list>
 
 class Farm
 {
@@ -13,5 +13,7 @@ class Farm
         ~Farm();
 
     private:
+
+    list <Animals *> 
 };
 #endif

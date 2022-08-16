@@ -1,5 +1,12 @@
 #include "Bull.hpp"
 
+Bull::Bull(float mass, Gender gender, float weight)
+    : Animals (mass,gender,weight)
+{
+    //TODO: codigos adicionais do construtor
+    //n_bulls++;
+}
+
 string Bull::sound()
 {
     return "muu!";
