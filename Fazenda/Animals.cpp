@@ -1,8 +1,21 @@
 
 #include "Animals.hpp"
 
-Animals::Animals(Gender gender, float weight)
+Animals::Animals(Gender gender)
 {
-    this->gender = gender;
-    this->weight = weight;
+    if(gender == Gender::Male)
+    this->gender = "Male";
+
+    else
+    this->gender = "Female";
+}
+
+void Animals::setage(int n)
+{
+      age = n;  
+}
+
+void Animals::setweight(float n)
+{
+    weight = n;
 }

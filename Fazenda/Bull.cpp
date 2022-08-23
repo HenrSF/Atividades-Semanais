@@ -1,57 +1,96 @@
 #include "Bull.hpp"
 
-Bull::Bull(float mass, Gender gender, float weight)
-    : Animals (mass,gender,weight)
+float Bull::price_kg;
+int Bull::n_bulls;
+
+namespace BULL
+{
+float min_weight = 300;
+float max_weight = 600;
+int max_age = 18; //months
+float food = 5;
+string cry = "MUUUU!";
+}
+
+Bull::Bull(Gender gender, float weight, int age)
+    : Animals (gender)
 {
     //TODO: codigos adicionais do construtor
-    //n_bulls++;
+    setweight(weight);
+    setage(age);
+    n_bulls++;
 }
 
-string Bull::sound()
+Bull::~Bull()
 {
-    return "muu!";
+    n_bulls--;
+    cout << "\nAnimal slaughtered.";
 }
-bool Bull::displacement()
+
+string Bull::sound() const
 {
-    if (displacement() == true)
+    return BULL::cry; //Remind of change;
+}
+
+void Bull::displacement()
+{
+    float w = getweight() - (getweight() * 0.004);
+
+    if(w <= BULL::min_weight)
+    setweight(w);
+}
+
+void Bull::setweight(float w) 
+{
+    if (w > BULL::max_weight && w < BULL::min_weight)
     {
-        return false;
+        Animals::setweight((BULL::max_weight + BULL::min_weight) / 2); //if the input value is invalid, it'll be setted has the mean between max and min values; 
     }
-    
-    else return true;
+
+    Animals::setweight(w);
 }
 
-int Bull::get_weight() const
-{   
-    if(weight != 0) return weight;
-}
-
-void Bull::set_weight(int bw)
+ void Bull::setprice_kg(float kg)
 {
-    weight = bw;
-}
+    if(kg > 0) price_kg = kg;
 
-
-float Bull::mass()
-{
-    if(displacement() == true)
-    {
-        return weight * 0,04;
-    }
-    else return weight;
+    else price_kg = 30;
 }
 
 float Bull::price()
 {
-    return weight * 10;
+    return getweight() * price_kg;
 }
 
-float Bull::eat()
+bool Bull::eat()
 {
-    if(weight < 120) return weight + 5;
-    
-    if (weight + 5 > 120)
+    if(getweight() + BULL::food >= BULL::max_weight)
     {
-        return 120;
+        return true; //in this way, will the object be deleted from the vector animals?    
     }
+
+    else
+    {
+        setweight(getweight() + BULL::food);
+        return false;
+    }
+}
+
+void Bull::setage(int n)
+{
+    if(n > 0 && n <= BULL::max_age)
+    {
+        Animals::setage(n);
+    }
+
+    else Animals::setage(1);
+}
+void Bull::print()
+{
+
+    cout << "\nBull    "
+         << "\nAge:    " << getage()
+         << "\nWeight: " << getweight()
+         << "\nGender: " << getgender()
+         << "\nPrice:  " << price();
 }

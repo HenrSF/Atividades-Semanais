@@ -17,23 +17,27 @@ class Animals
 {
     public:
 
-      Animals (Gender gender, float weight); //constructor;
+      Animals (Gender gender); //constructor;
 
-      virtual string sound () = 0;
-      virtual void displacement () = 0;
-      virtual float eat () = 0;
-      virtual void print () = 0;
+      virtual string sound() const = 0;
+      virtual void displacement()  = 0;
+      virtual bool eat()           = 0;
+      virtual void print()         = 0;
 
-      //Methods get:
-      float getweight() {return weight;}
-      float getgender() {return gender;}
+      //Getters:
+      virtual float getweight() const {return weight;}
+      virtual string getgender() const {return gender;}
+      virtual int getage()      const {return age;}
 
-      //Methods set:
-      virtual void setweight (float weight) = 0;
-
+      //Setters:
+      virtual void setweight(float weight);
+      virtual void setage(int age);
+    
     private:
-
-      Gender gender;
+      
+      int age;
+      string gender;
       float weight;
+
 };
 #endif

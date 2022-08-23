@@ -1,50 +1,96 @@
 #include "Chicken.hpp"
 
-string Chicken::sound()
+float Chicken::price_kg;
+int Chicken::n_chickens;
+
+namespace CHICKEN //Falta ajeitar;
 {
-    return "có có!";
+float min_weight = 0.9;
+float max_weight = 1.8;
+int max_age = 2; //months
+float food = 0.2;
+string cry = "có có!";
 }
-bool Chicken::displacement()
+
+Chicken::Chicken(Gender gender, float weight, int age)
+    : Animals (gender)
 {
-    if (displacement() == true)
+    //TODO: codigos adicionais do construtor
+    setweight(weight);
+    setage(age);
+    n_chickens++;
+}
+
+Chicken::~Chicken()
+{
+    n_chickens--;
+    cout << "\nAnimal slaughtered.";
+}
+
+string Chicken::sound() const
+{
+    return CHICKEN::cry; //Remind of change;
+}
+
+void Chicken::displacement()
+{
+    float w = getweight() - (getweight() * 0.004);
+
+    if(w <= Chicken::min_weight)
+    setweight(w);
+}
+
+void Chicken::setweight(float w) 
+{
+    if (w > Chicken::max_weight && w < Chicken::min_weight)
     {
-        return false;
+        Animals::setweight((Chicken::max_weight + Chicken::min_weight) / 2); //if the input value is invalid, it'll be setted has the mean between max and min values; 
     }
-    
-    else return true;
+
+    Animals::setweight(w);
 }
 
-int Chicken::getweight() const
-{   
-    if(weight != 0) return weight;
-}
-
-void Chicken::setweight(int bw)
+ void Chicken::setprice_kg(float kg)
 {
-    weight = bw;
-}
+    if(kg > 0) price_kg = kg;
 
-
-float Chicken::mass()
-{
-    if(displacement() == true)
-    {
-        return weight * 0,04;
-    }
-    else return weight;
+    else price_kg = 30;
 }
 
 float Chicken::price()
 {
-    return weight * 10;
+    return getweight() * price_kg;
 }
 
-float Chicken::eat()
+bool Chicken::eat()
 {
-    if(weight < 1.8) return weight + 5;
-    
-    if (weight + 5 > 1.8)
+    if(getweight() + Chicken::food >= Chicken::max_weight)
     {
-        return 1.8;
+        return true; //in this way, will the object be deleted from the vector animals?    
     }
+
+    else
+    {
+        setweight(getweight() + Chicken::food);
+        return false;
+    }
+}
+
+void Chicken::setage(int n)
+{
+    if(n > 0 && n <= Chicken::max_age)
+    {
+        Animals::setage(n);
+    }
+
+    else Animals::setage(1);
+}
+void Chicken::print()
+{
+
+    cout << "\nchicken    "
+         << "\nAge:    " << getage()
+         << "\nWeight: " << getweight()
+         << "\nGender: " << getgender()
+         << "\nPrice:  " << price();
 }

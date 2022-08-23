@@ -3,22 +3,40 @@
 
 #include "Animals.hpp"
 
+namespace CHICKEN
+{
+extern float min_weight;
+extern float max_weight;
+extern int max_age; //months
+extern float food;
+extern string cry;
+}
+
 class Chicken : public Animals
 {
     public:
-     virtual string sound ();
-     virtual bool displacement ();
-     virtual float eat ();
-     virtual float mass();
-     virtual float price ();
-     virtual void print ();
-    
-     int getweight() const;
-     void setweight(int weight);
+
+      Chicken(Gender gender, float weight, int age); //Constructor;
+      ~Chicken(); //Destructor;
+
+      virtual void displacement ();
+      virtual bool eat ();
+      virtual float price (); 
+      virtual void print ();
+      virtual string sound () const;
+
+      //Setters
+      virtual void setweight(float );
+      static void setprice_kg(float price);
+      virtual void setage(int age);
+
+      //Getters
+      static float getprice_kg() {return price_kg;}
+      static int getn_chickens()    {return n_chickens;}
 
     private:
-        int weight;
-        
-
+    
+        static float price_kg;
+        static int n_chickens;
 };
 #endif
