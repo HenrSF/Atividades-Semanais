@@ -7,8 +7,9 @@ namespace CHICKEN
 {
 extern float min_weight;
 extern float max_weight;
-extern int max_age; //months
+extern int max_age; //Days
 extern float food;
+extern float walk;
 extern string cry;
 }
 

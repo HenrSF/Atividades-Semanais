@@ -9,6 +9,7 @@ float min_weight = 300;
 float max_weight = 600;
 int max_age = 18; //months
 float food = 5;
+float walk = 0.004;
 string cry = "MUUUU!";
 }
 
@@ -34,7 +35,7 @@ string Bull::sound() const
 
 void Bull::displacement()
 {
-    float w = getweight() - (getweight() * 0.004);
+    float w = getweight() - (getweight() * BULL::walk);
 
     if(w <= BULL::min_weight)
     setweight(w);
@@ -88,9 +89,9 @@ void Bull::setage(int n)
 void Bull::print()
 {
 
-    cout << "\nBull    "
-         << "\nAge:    " << getage()
-         << "\nWeight: " << getweight()
+    cout << "\n\nBull  "
+         << "\nAge:    " << getage() << " Months" << fixed << setprecision(2)
+         << "\nWeight: " << getweight() << " Kg"
          << "\nGender: " << getgender()
-         << "\nPrice:  " << price();
+         << "\nPrice:  R$" << price();
 }

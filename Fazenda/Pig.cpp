@@ -10,7 +10,8 @@ float min_weight = 60;
 float max_weight = 120;
 int max_age = 6; //months
 float food = 2;
-string cry = "oinc oinc!";
+float walk = 0.003;
+string cry = "OINC OINC!";
 }
 
 Pig::Pig(Gender gender, float weight, int age)
@@ -35,7 +36,7 @@ string Pig::sound() const
 
 void Pig::displacement()
 {
-    float w = getweight() - (getweight() * 0.004);
+    float w = getweight() - (getweight() * PIG::walk);
 
     if(w <= PIG::min_weight)
     setweight(w);
@@ -89,9 +90,9 @@ void Pig::setage(int n)
 void Pig::print()
 {
 
-    cout << "\nPig    "
-         << "\nAge:    " << getage()
-         << "\nWeight: " << getweight()
+    cout << "\n\nPig   "
+         << "\nAge:    " << getage() << " Months" << fixed << setprecision(2)
+         << "\nWeight: " << getweight() << " Kg"
          << "\nGender: " << getgender()
-         << "\nPrice:  " << price();
+         << "\nPrice:  R$" << price();
 }
