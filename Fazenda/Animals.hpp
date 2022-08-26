@@ -17,10 +17,11 @@ class Animals
 {
     public:
 
-      Animals (Gender gender); //constructor;
+      Animals(Gender gender); //constructor;
 
       virtual string sound() const = 0;
       virtual void displacement()  = 0;
+      virtual float price()        = 0;
       virtual bool eat()           = 0;
       virtual void print()         = 0;
 

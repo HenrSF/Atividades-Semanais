@@ -4,12 +4,15 @@
 
 int main()
 {
-    Farm farm("city", "state", 50);
+    srand(time(NULL));
 
-    farm.Add_toFarm (new Bull(Gender::Male, 450, 10));
+    Farm farm ("city", "state", 50);
 
-    farm.Add_toFarm (Type_Animal::Bull);
-
-    
+    for (int i = 0; i < 50; i++)
+    {
+    farm.Add_toFarm (Type_Animal (rand() % 5));
+    }
+     
+    farm.print();
     return 0;
 }
