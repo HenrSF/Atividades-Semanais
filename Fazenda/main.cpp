@@ -14,12 +14,24 @@ int main()
     }
 
     farm.print();
-
+    /*
+    for (int i = 0; i < farm.getn_animals(); i++)
+    {
+        farm.print_animal(i);
+    }
+    */
     farm.feed(2);
 
     farm.print();
 
     farm.displacement(20);
+    /*
+    for (int i = 0; i < farm.getn_animals(); i++)
+    {
+        farm.print_animal(i);
+    }
+    */
+
     farm.Rm_fromFarm(10);
 
     farm.print();

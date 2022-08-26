@@ -26,7 +26,6 @@ Pig::Pig(Gender gender, float weight, int age)
 Pig::~Pig()
 {
     n_pigs--;
-    cout << "\nAnimal slaughtered.";
 }
 
 string Pig::sound() const

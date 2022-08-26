@@ -25,7 +25,6 @@ Chicken::Chicken(Gender gender, float weight, int age)
 Chicken::~Chicken()
 {
     n_chickens--;
-    cout << "\nAnimal slaughtered.";
 }
 
 string Chicken::sound() const

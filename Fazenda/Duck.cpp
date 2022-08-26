@@ -25,7 +25,6 @@ Duck::Duck(Gender gender, float weight, int age)
 Duck::~Duck()
 {
     n_ducks--;
-    cout << "\nAnimal slaughtered.";
 }
 
 string Duck::sound() const

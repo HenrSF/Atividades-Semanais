@@ -16,16 +16,15 @@ string cry = "MUUUU!";
 Bull::Bull(Gender gender, float weight, int age)
     : Animals (gender)
 {
-    //TODO: codigos adicionais do construtor
     setweight(weight);
     setage(age);
+    
     n_bulls++;
 }
 
 Bull::~Bull()
 {
     n_bulls--;
-    cout << "\nAnimal slaughtered.";
 }
 
 string Bull::sound() const

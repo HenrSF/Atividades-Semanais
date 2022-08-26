@@ -7,10 +7,15 @@ using namespace std;
 #include <iostream>
 #include <iomanip>
 
-enum Gender
+enum Gender //Structure for 
 {
   Male,
   Female
+};
+
+enum Type_Animal 
+{
+    Type_Bull, Type_Pig, Type_Duck, Type_Chicken
 };
 
 class Animals
@@ -18,6 +23,7 @@ class Animals
     public:
 
       Animals(Gender gender); //constructor;
+      virtual ~Animals();
 
       virtual string sound() const = 0;
       virtual void displacement()  = 0;
@@ -30,6 +36,7 @@ class Animals
       virtual string getgender() const {return gender;}
       virtual int getage()      const {return age;}
       virtual bool getoverweight() {return overweight;}
+      virtual Type_Animal gettype() const {return type;}
 
       //Setters:
       virtual void setweight(float weight);
@@ -42,5 +49,8 @@ class Animals
       string gender;
       float weight;
       bool overweight;
+      Type_Animal type;
+      
+      virtual void settype(Type_Animal type) {this->type = type;} //Private set type;
 };
 #endif

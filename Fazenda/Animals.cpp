@@ -12,6 +12,11 @@ Animals::Animals(Gender gender)
     overweight = false;
 }
 
+Animals::~Animals()
+{
+
+}
+
 void Animals::setage(int n)
 {
       age = n;  

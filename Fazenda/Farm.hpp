@@ -14,11 +14,6 @@ using namespace std;
 #include <ctime>
 #include <cstdlib>
 
-enum Type_Animal //Use this in the base class to 
-{
-    Type_Bull, Type_Pig, Type_Duck, Type_Chicken
-};
-
 class Farm
 {
     public:
@@ -48,7 +43,7 @@ class Farm
         void SetCity(string city) {this->city = city;}
         void SetState(string state) {this->state = state;}
         void SetArea(float area) {this->area = area;}
-        void setPrice_kg(float bull, float pig, float duck, float chicken); //Price per kg for each animal
+        void setPrice_kg(float bull, float pig, float duck, float chicken); //Price per kg for each animal;
 
     private:
 
@@ -56,8 +51,8 @@ class Farm
         string city;
         string state;
         float area;
+        float income; //profit of sold animals
 
         Animals* CreateAnimal(Type_Animal type); //Creates a new animal
-
 };
 #endif

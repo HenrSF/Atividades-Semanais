@@ -10,7 +10,14 @@ Farm::Farm(string city, string state, float area)
 
 Farm::~Farm()
 {
+    for(size_t i = 0; i < farm.size(); i++)
+    {
+        delete farm[i];
+    }
+
     farm.clear();
+
+    cout << "\nGoodbye farm!" << endl;
 }
 
 void Farm::Add_toFarm(Type_Animal type)
@@ -56,7 +63,8 @@ void Farm::print()
          << "\nNumber of pigs: " << Pig::getn_pigs()
          << "\nNumber of ducks: " << Duck::getn_ducks()
          << "\nNumber of chickens: " << Chicken::getn_chickens()
-         << "\nTotal price: R$" << total_price() << endl;
+         << "\nTotal price: R$" << total_price()
+         << "\nRevenue: R$" << income << endl;
 }
 
 void Farm::print_animal(int index)
@@ -107,12 +115,19 @@ void Farm::Rm_fromFarm(int index)
         exit(EXIT_FAILURE);
     }
 
+    delete farm[index];
     farm.erase(farm.begin() + index);
 }
 
 void Farm::clear_farm()
 {
+    for(size_t i = 0; i < farm.size(); i++)
+    {
+        delete farm[i];
+    }
+
     farm.erase(farm.begin(), farm.end());
+    cout << "\nFarm cleared!";
 }
 
 void Farm::feed(int times)
@@ -122,6 +137,7 @@ void Farm::feed(int times)
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
+
     for(int i = 0; i < times; i++)
     for(size_t j = 0; j < farm.size(); j++)
     {
@@ -129,6 +145,8 @@ void Farm::feed(int times)
 
         if(farm[j]->getoverweight())
         {
+            income += farm[j]->price();
+            delete farm[j];
             farm.erase(farm.begin() + j);
             j--;
         }
@@ -142,6 +160,7 @@ void Farm::displacement(int times)
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
+
     for(int i = 0; i < times; i++)
     for(size_t j = 0; j < farm.size(); j++)
     {
