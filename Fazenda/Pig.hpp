@@ -38,6 +38,6 @@ class Pig : public Animals
     private:
     
         static float price_kg;
-        static int n_pigs;
+        static int n_pigs; //number of pings being raised in the farm
 };
 #endif
