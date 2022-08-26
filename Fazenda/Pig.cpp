@@ -8,10 +8,10 @@ namespace PIG
 {
 float min_weight = 60;
 float max_weight = 120;
-int max_age = 6;    //months
-float food = 2;     //amount (kg) of weight this animal can gain
-float walk = 0.003; //distance travelled
-string cry = "OINC OINC!"; //onomatopoeia (portuguese - BR)
+int max_age = 6;    //Months
+float food = 2;     //Amount (kg) of weight this animal can gain
+float weight_loss = 0.003; //Weight loss in percentage of the current weight of the animal
+string cry = "OINC OINC!"; //Onomatopoeia (portuguese - BR)
 }
 
 Pig::Pig(Gender gender, float weight, int age)
@@ -35,7 +35,7 @@ string Pig::sound() const
 
 void Pig::displacement() //everytime this function is called the animal will move a fixed distance.
 {
-    float w = getweight() - (getweight() * PIG::walk); //the animal loses weight at a fixed amount
+    float w = getweight() - (getweight() * PIG::weight_loss); //the animal loses weight at a fixed amount
 
     if(w <= PIG::min_weight) //the animal has a minimum weight value and it'll be set at 300 if any given value is below that
     setweight(w);

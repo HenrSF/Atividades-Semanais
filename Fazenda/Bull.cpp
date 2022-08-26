@@ -7,10 +7,10 @@ namespace BULL
 {
 float min_weight = 300;
 float max_weight = 600;
-int max_age = 18;   //months
-float food = 5;     //amount (kg) of weight this animal can gain
-float walk = 0.004; //distance travelled
-string cry = "MUUUU!"; //onomatopoeia (portuguese - BR)
+int max_age = 18;   //Months
+float food = 5;     //Amount (kg) of weight this animal can gain
+float weight_loss = 0.004; //Weight loss in percentage of the current weight of the animal
+string cry = "MUUUU!"; //Onomatopoeia (portuguese - BR)
 }
 
 Bull::Bull(Gender gender, float weight, int age) //constructor
@@ -34,7 +34,7 @@ string Bull::sound() const
 
 void Bull::displacement() //everytime this function is called the animal will move a fixed distance.
 {
-    float w = getweight() - (getweight() * BULL::walk); //the animal loses weight at a fixed amount
+    float w = getweight() - (getweight() * BULL::weight_loss); //the animal loses weight at a fixed amount
 
     if(w <= BULL::min_weight) //the animal has a minimum weight value and it'll be set at 300 if any given value is below that
     setweight(w);

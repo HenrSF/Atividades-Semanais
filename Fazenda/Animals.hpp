@@ -36,7 +36,6 @@ class Animals
       virtual string getgender() const {return gender;}
       virtual int getage()      const {return age;}
       virtual bool getoverweight() {return overweight;}
-      virtual Type_Animal gettype() const {return type;}
 
       //Setters:
       virtual void setweight(float weight);
@@ -49,8 +48,6 @@ class Animals
       string gender;
       float weight;
       bool overweight;
-      Type_Animal type;
-      
-      virtual void settype(Type_Animal type) {this->type = type;} //Private set type;
+
 };
 #endif

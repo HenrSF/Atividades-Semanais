@@ -8,9 +8,9 @@ namespace DUCK
 float min_weight = 2.25;
 float max_weight = 4.5;
 int max_age = 60; //Days
-float food = 0.5; //amount (kg) of weight this animal can gain
-float walk = 0.002; //distance travelled
-string cry = "QUÁ QUÁ!"; //onomatopoeia (portuguese - BR)
+float food = 0.5; //Amount (kg) of weight this animal can gain
+float weight_loss = 0.002; //Weight loss in percentage of the current weight of the animal
+string cry = "QUÁ QUÁ!"; //Onomatopoeia (portuguese - BR)
 }
 
 Duck::Duck(Gender gender, float weight, int age)
@@ -34,7 +34,7 @@ string Duck::sound() const
 
 void Duck::displacement() //everytime this function is called the animal will move a fixed distance.
 {
-    float w = getweight() - (getweight() * DUCK::walk); //the animal loses weight at a fixed amount
+    float w = getweight() - (getweight() * DUCK::weight_loss); //the animal loses weight at a fixed amount
 
     if(w <= DUCK::min_weight) //the animal has a minimum weight value and it'll be set at 300 if any given value is below that
     setweight(w);

@@ -1,6 +1,6 @@
 #include "Farm.hpp"
 
-Farm::Farm(string city, string state, float area) //constructor
+Farm::Farm(string city, string state, float area) //Constructor
 {
     SetArea(area);
     SetCity(city);
@@ -8,11 +8,11 @@ Farm::Farm(string city, string state, float area) //constructor
     setPrice_kg(35, 28, 32, 20);
 }
 
-Farm::~Farm() //destructor
+Farm::~Farm() //Destructor
 {
     for(size_t i = 0; i < farm.size(); i++) 
     {
-        delete farm[i];
+        delete farm[i]; 
     }
 
     farm.clear();
@@ -20,12 +20,12 @@ Farm::~Farm() //destructor
     cout << "\nGoodbye farm!" << endl;
 }
 
-void Farm::Add_toFarm(Type_Animal type) //add an animal based on it's type to the farm's vector
+void Farm::Add_toFarm(Type_Animal type) //Add an animal based on it's type to the farm's vector
 {
     farm.push_back(CreateAnimal(type));
 }
 
-Animals* Farm::CreateAnimal(Type_Animal type) //the animals are random generated (including gender, weight, age)
+Animals* Farm::CreateAnimal(Type_Animal type) //The animals are random generated (including gender, weight, age)
 {
     switch(type)
     {
@@ -47,9 +47,9 @@ Animals* Farm::CreateAnimal(Type_Animal type) //the animals are random generated
     }
 }
 
-void Farm::print()
+void Farm::print() //Print the Farm status;
 {
-    if(farm.empty())
+    if(farm.empty()) //If the Farm is empty there is nothing to print;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
@@ -64,23 +64,23 @@ void Farm::print()
          << "\nNumber of ducks: " << Duck::getn_ducks()
          << "\nNumber of chickens: " << Chicken::getn_chickens()
          << "\nTotal price: R$" << total_price()
-         << "\nRevenue: R$" << income << endl;
+         << "\nRevenue: R$" << revenue << endl;
 }
 
-void Farm::print_animal(int index)
+void Farm::print_animal(int index) //Print the animal status by the index
 {
-    if(farm.empty())
+    if(farm.empty()) //If the Farm is empty there is nothing to print;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
 
-    farm[index]->print();
+    farm[index]->print(); //Use the print method of the object by the pointer;
 }
 
-float Farm::total_price() const
+float Farm::total_price() const //Print the sum of all animal's price;
 {
-    if(farm.empty())
+    if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
@@ -90,15 +90,15 @@ float Farm::total_price() const
 
     for(size_t i = 0; i < farm.size(); i++) 
     {
-        price += farm[i]->price(); //gives the price of all current living animals
+        price += farm[i]->price(); //Gives the price of all current living animals
     }
 
     return price;
 }
 
-float Farm::price(int index) const
+float Farm::price(int index) const //Gives the price of one animal
 {
-    if(farm.empty())
+    if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
@@ -107,7 +107,7 @@ float Farm::price(int index) const
     return farm[index]->price();
 }
 
-void Farm::Rm_fromFarm(int index)
+void Farm::Rm_fromFarm(int index) //Remove animals from the farm
 {
     if(farm.empty())
     {
@@ -119,18 +119,19 @@ void Farm::Rm_fromFarm(int index)
     farm.erase(farm.begin() + index);
 }
 
-void Farm::clear_farm()
+void Farm::clear_farm() //Remove all animals from the farm
 {
-    for(size_t i = 0; i < farm.size(); i++)
+    for(size_t i = 0; i < farm.size(); i++) //Delete all the objects
     {
         delete farm[i];
     }
 
-    farm.erase(farm.begin(), farm.end());
+    farm.erase(farm.begin(), farm.end()); //
     cout << "\nFarm cleared!";
 }
 
-void Farm::feed(int times)
+void Farm::feed(int times) //Feed all the animals of the farm by a number of times
+
 {
     if(farm.empty())
     {
@@ -145,7 +146,8 @@ void Farm::feed(int times)
 
         if(farm[j]->getoverweight())
         {
-            income += farm[j]->price();
+            revenue += farm[j]->price(); //Return the price of the animals killed
+
             delete farm[j];
             farm.erase(farm.begin() + j);
             j--;
@@ -153,7 +155,7 @@ void Farm::feed(int times)
     }
 }
 
-void Farm::displacement(int times)
+void Farm::displacement(int times) //Calls the displacement function X times so the animals can move
 {
     if(farm.empty())
     {
@@ -168,7 +170,7 @@ void Farm::displacement(int times)
     }
 }
 
-void Farm::setPrice_kg(float bull, float pig, float duck, float chicken)
+void Farm::setPrice_kg(float bull, float pig, float duck, float chicken) //Set the price of each type of animal 
 {
     Bull::setprice_kg(bull);
     Pig::setprice_kg(pig);
