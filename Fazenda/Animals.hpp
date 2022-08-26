@@ -22,23 +22,25 @@ class Animals
       virtual string sound() const = 0;
       virtual void displacement()  = 0;
       virtual float price()        = 0;
-      virtual bool eat()           = 0;
+      virtual void eat()           = 0;
       virtual void print()         = 0;
 
       //Getters:
       virtual float getweight() const {return weight;}
       virtual string getgender() const {return gender;}
       virtual int getage()      const {return age;}
+      virtual bool getoverweight() {return overweight;}
 
       //Setters:
       virtual void setweight(float weight);
       virtual void setage(int age);
+      virtual void setoverweight();
     
     private:
       
       int age;
       string gender;
       float weight;
-
+      bool overweight;
 };
 #endif

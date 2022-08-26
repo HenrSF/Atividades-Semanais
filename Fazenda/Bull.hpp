@@ -21,7 +21,7 @@ class Bull : public Animals
       ~Bull(); //Destructor;
 
       virtual void displacement ();
-      virtual bool eat ();
+      virtual void eat ();
       virtual float price (); 
       virtual void print ();
       virtual string sound () const;

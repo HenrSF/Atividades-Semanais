@@ -63,17 +63,16 @@ float Duck::price()
     return getweight() * price_kg;
 }
 
-bool Duck::eat()
+void Duck::eat()
 {
     if(getweight() + DUCK::food >= DUCK::max_weight)
     {
-        return true; //in this way, will the object be deleted from the vector animals?    
+        setoverweight();
     }
 
     else
     {
         setweight(getweight() + DUCK::food);
-        return false;
     }
 }
 

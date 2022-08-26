@@ -63,17 +63,16 @@ float Bull::price()
     return getweight() * price_kg;
 }
 
-bool Bull::eat()
+void Bull::eat()
 {
     if(getweight() + BULL::food >= BULL::max_weight)
     {
-        return true; //in this way, will the object be deleted from the vector animals?    
+        setoverweight();
     }
 
     else
     {
         setweight(getweight() + BULL::food);
-        return false;
     }
 }
 

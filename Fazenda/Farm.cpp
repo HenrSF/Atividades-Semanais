@@ -80,7 +80,7 @@ float Farm::total_price() const
 
     float price;
 
-    for(int i = 0; i < farm.size(); i++)
+    for(size_t i = 0; i < farm.size(); i++)
     {
         price += farm[i]->price();
     }
@@ -115,31 +115,37 @@ void Farm::clear_farm()
     farm.erase(farm.begin(), farm.end());
 }
 
-void Farm::feed()
+void Farm::feed(int times)
 {
     if(farm.empty())
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
-
-    for(int i = 0; i < farm.size(); i++)
+    for(int i = 0; i < times; i++)
+    for(size_t j = 0; j < farm.size(); j++)
     {
-        farm[i]->eat();
+        farm[j]->eat();
+
+        if(farm[j]->getoverweight())
+        {
+            farm.erase(farm.begin() + j);
+            j--;
+        }
     }
 }
 
-void Farm::displacement()
+void Farm::displacement(int times)
 {
     if(farm.empty())
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
-
-    for(int i = 0; i < farm.size(); i++)
+    for(int i = 0; i < times; i++)
+    for(size_t j = 0; j < farm.size(); j++)
     {
-        farm[i]->displacement();
+        farm[j]->displacement();
     }
 }
 

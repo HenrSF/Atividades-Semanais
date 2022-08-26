@@ -8,6 +8,8 @@ Animals::Animals(Gender gender)
 
     else
     this->gender = "Female";
+
+    overweight = false;
 }
 
 void Animals::setage(int n)
@@ -18,4 +20,9 @@ void Animals::setage(int n)
 void Animals::setweight(float n)
 {
     weight = n;
+}
+
+void Animals::setoverweight()
+{
+    overweight = true;
 }

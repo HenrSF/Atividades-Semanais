@@ -21,7 +21,7 @@ class Pig : public Animals
         ~Pig(); //Destructor
 
         virtual void displacement ();
-        virtual bool eat ();
+        virtual void eat ();
         virtual float price (); 
         virtual void print ();
         virtual string sound () const;
@@ -39,9 +39,5 @@ class Pig : public Animals
     
         static float price_kg;
         static int n_pigs;
-        //const static float min_weight = 300;
-        //const static float max_weight = 600;
-        
-
 };
 #endif

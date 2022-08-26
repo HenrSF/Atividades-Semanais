@@ -34,13 +34,14 @@ class Farm
         float price(int index) const; //Print the current price of one animal;
         void Rm_fromFarm(int index); //Remove an animal from the Farm;
         void clear_farm(); //Clear the Farm;
-        void feed(); //Feed all animals in the Farm;
-        void displacement(); //Displace all animals in the Farm;
+        void feed(int times); //Feed all animals in the Farm;
+        void displacement(int times); //Displace all animals in the Farm;
 
         //Getters
         string GetCity() const {return city;}
         string GetState() const {return state;}
         float GetArea() const {return area;}
+        int getn_animals() const {return farm.size();}
         
 
         //Setters
@@ -52,7 +53,6 @@ class Farm
     private:
 
         vector <Animals *> farm;
-
         string city;
         string state;
         float area;

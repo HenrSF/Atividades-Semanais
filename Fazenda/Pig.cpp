@@ -64,17 +64,16 @@ float Pig::price()
     return getweight() * price_kg;
 }
 
-bool Pig::eat()// bool
+void Pig::eat()// bool
 {
     if(getweight() + PIG::food >= PIG::max_weight)// USar um bool para validar e remover da lista, na classe fazenda
     {
-        return true;//delete this;// don't use that; //in this way, will the object be deleted from the vector animals?    
+        setoverweight();
     }
 
     else
     {
         setweight(getweight() + PIG::food);
-        return false;
     }
 }
 
