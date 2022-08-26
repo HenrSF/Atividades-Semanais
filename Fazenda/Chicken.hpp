@@ -38,6 +38,6 @@ class Chicken : public Animals
     private:
     
         static float price_kg;
-        static int n_chickens;
+        static int n_chickens; //number of chickens being raised in the farm
 };
 #endif
