@@ -37,6 +37,6 @@ class Duck : public Animals
     private:
     
         static float price_kg;
-        static int n_ducks;
+        static int n_ducks; //number of ducks being raised in the farm 
 };
 #endif
