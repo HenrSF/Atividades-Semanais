@@ -7,13 +7,13 @@ using namespace std;
 #include <iostream>
 #include <iomanip>
 
-enum Gender //Structure for 
+enum Gender //linking a gender to a number (starting from 0)
 {
   Male,
   Female
 };
 
-enum Type_Animal 
+enum Type_Animal //linking an animal type to a number (starting from 0)
 {
     Type_Bull, Type_Pig, Type_Duck, Type_Chicken
 };
@@ -24,7 +24,7 @@ class Animals
 
       Animals(Gender gender); //constructor;
       virtual ~Animals();
-
+      
       virtual string sound() const = 0;
       virtual void displacement()  = 0;
       virtual float price()        = 0;
