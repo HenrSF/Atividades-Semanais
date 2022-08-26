@@ -38,6 +38,6 @@ class Bull : public Animals
     private:
     
         static float price_kg;
-        static int n_bulls;
+        static int n_bulls; //number of bulls being raised in the farm
 };
 #endif
