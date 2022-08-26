@@ -8,16 +8,16 @@ namespace PIG
 {
 float min_weight = 60;
 float max_weight = 120;
-int max_age = 6; //months
-float food = 2;
-float walk = 0.003;
-string cry = "OINC OINC!";
+int max_age = 6;    //months
+float food = 2;     //amount (kg) of weight this animal can gain
+float walk = 0.003; //distance travelled
+string cry = "OINC OINC!"; //onomatopoeia (portuguese - BR)
 }
 
 Pig::Pig(Gender gender, float weight, int age)
     : Animals (gender)
 {
-    //TODO: codigos adicionais do construtor
+    
     setweight(weight);
     setage(age);
     n_pigs++;
@@ -33,11 +33,11 @@ string Pig::sound() const
     return PIG::cry; //Remind of change;
 }
 
-void Pig::displacement()
+void Pig::displacement() //everytime this function is called the animal will move a fixed distance.
 {
-    float w = getweight() - (getweight() * PIG::walk);
+    float w = getweight() - (getweight() * PIG::walk); //the animal loses weight at a fixed amount
 
-    if(w <= PIG::min_weight)
+    if(w <= PIG::min_weight) //the animal has a minimum weight value and it'll be set at 300 if any given value is below that
     setweight(w);
 }
 
@@ -45,7 +45,7 @@ void Pig::setweight(float w)
 {
     if (w > PIG::max_weight && w < PIG::min_weight)
     {
-        Animals::setweight((PIG::max_weight + PIG::min_weight) / 2); //if the input value is invalid, it'll be setted has the mean between max and min values; 
+        Animals::setweight((PIG::max_weight + PIG::min_weight) / 2); //if the input value is invalid, it'll be set to have the mean between max and min values; 
     }
 
     Animals::setweight(w);
@@ -60,30 +60,30 @@ void Pig::setweight(float w)
 
 float Pig::price()
 {
-    return getweight() * price_kg;
+    return getweight() * price_kg; //returns the revenue of an animal
 }
 
 void Pig::eat()// bool
 {
-    if(getweight() + PIG::food >= PIG::max_weight)// USar um bool para validar e remover da lista, na classe fazenda
+    if(getweight() + PIG::food >= PIG::max_weight) //the animal's weight cannot be above the maximum 
     {
         setoverweight();
     }
 
     else
     {
-        setweight(getweight() + PIG::food);
+        setweight(getweight() + PIG::food); //the animal gain a fixed amount of weight
     }
 }
 
 void Pig::setage(int n)
 {
-    if(n > 0 && n <= PIG::max_age)
+    if(n > 0 && n <= PIG::max_age) //the animal has a maximum age which is going to be considered when or not it'll be killed
     {
         Animals::setage(n);
     }
 
-    else Animals::setage(1);
+    else Animals::setage(1); //if the input value is an invalid one. The age will be 1 (month)
 }
 void Pig::print()
 {
