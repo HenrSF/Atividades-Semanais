@@ -12,7 +12,7 @@ int main()
     {
     farm.Add_toFarm (Type_Animal (rand() % 5));
     }
-     
+    
     farm.print();
     return 0;
 }
