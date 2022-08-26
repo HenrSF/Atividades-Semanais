@@ -1,6 +1,6 @@
 #include "Farm.hpp"
 
-Farm::Farm(string city, string state, float area)
+Farm::Farm(string city, string state, float area) //constructor
 {
     SetArea(area);
     SetCity(city);
@@ -8,9 +8,9 @@ Farm::Farm(string city, string state, float area)
     setPrice_kg(35, 28, 32, 20);
 }
 
-Farm::~Farm()
+Farm::~Farm() //destructor
 {
-    for(size_t i = 0; i < farm.size(); i++)
+    for(size_t i = 0; i < farm.size(); i++) 
     {
         delete farm[i];
     }
@@ -20,12 +20,12 @@ Farm::~Farm()
     cout << "\nGoodbye farm!" << endl;
 }
 
-void Farm::Add_toFarm(Type_Animal type)
+void Farm::Add_toFarm(Type_Animal type) //add an animal based on it's type to the farm's vector
 {
     farm.push_back(CreateAnimal(type));
 }
 
-Animals* Farm::CreateAnimal(Type_Animal type)
+Animals* Farm::CreateAnimal(Type_Animal type) //the animals are random generated (including gender, weight, age)
 {
     switch(type)
     {
@@ -88,9 +88,9 @@ float Farm::total_price() const
 
     float price;
 
-    for(size_t i = 0; i < farm.size(); i++)
+    for(size_t i = 0; i < farm.size(); i++) 
     {
-        price += farm[i]->price();
+        price += farm[i]->price(); //gives the price of all current living animals
     }
 
     return price;
