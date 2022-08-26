@@ -24,6 +24,8 @@ int main()
 
     farm.print();
 
+    farm.feed(10);
+    
     farm.displacement(20);
     /*
     for (int i = 0; i < farm.getn_animals(); i++)
