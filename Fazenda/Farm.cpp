@@ -137,7 +137,7 @@ float Farm::total_price() //Print the sum of all animal's price;
     return price;
 }
 
-float Farm::price_animal(Type_Animal type, int index) //Gives the price of one animal
+float Farm::price_animal(Type_Animal type, int index) //Gives the price of a specific type of animal
 {
     if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
@@ -170,7 +170,7 @@ float Farm::price_animal(Type_Animal type, int index) //Gives the price of one a
     return farm[i]->price();
 }
 
-float Farm::price_type(Type_Animal type) //Gives the price of all animals of one type specified;
+float Farm::price_type(Type_Animal type) //Gives the price of all animals from a specific type
 {
     if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
