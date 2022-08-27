@@ -22,7 +22,7 @@ class Animals
 {
     public:
 
-      Animals(Gender gender); //constructor;
+      Animals(Gender gender, Type_Animal type); //constructor;
       virtual ~Animals();
       
       virtual string sound() const = 0;
@@ -36,6 +36,7 @@ class Animals
       virtual string getgender() const {return gender;}
       virtual int getage()      const {return age;}
       virtual bool getoverweight() {return overweight;}
+      virtual Type_Animal gettype() const {return signature;}
 
       //Setters:
       virtual void setweight(float weight);
@@ -48,6 +49,7 @@ class Animals
       string gender;
       float weight;
       bool overweight;
+      Type_Animal signature;
 
 };
 #endif

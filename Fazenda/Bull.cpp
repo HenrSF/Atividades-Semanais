@@ -14,7 +14,7 @@ string cry = "MUUUU!"; //Onomatopoeia (portuguese - BR)
 }
 
 Bull::Bull(Gender gender, float weight, int age) //constructor
-    : Animals (gender)
+    : Animals (gender, Type_Bull)
 {
     setweight(weight);
     setage(age);
@@ -87,9 +87,9 @@ void Bull::setage(int n)
 void Bull::print()
 {
 
-    cout << "\n\nBull  "
-         << "\nAge:    " << getage() << " Months" << fixed << setprecision(2)
+    cout << "Bull  "
+         << "\nAge:    " << getage() << " Months" << fixed << setprecision(3)
          << "\nWeight: " << getweight() << " Kg"
-         << "\nGender: " << getgender()
+         << "\nGender: " << getgender() << setprecision(2)
          << "\nPrice:  R$" << price();
 }

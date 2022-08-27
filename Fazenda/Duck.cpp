@@ -14,7 +14,7 @@ string cry = "QUÁ QUÁ!"; //Onomatopoeia (portuguese - BR)
 }
 
 Duck::Duck(Gender gender, float weight, int age)
-    : Animals (gender)
+    : Animals (gender, Type_Duck)
 {
     
     setweight(weight);
@@ -87,9 +87,9 @@ void Duck::setage(int n)
 
 void Duck::print()
 {
-    cout << "\n\nDuck    "
-         << "\nAge:    " << getage() << " Days" << fixed << setprecision(2)
+    cout << "Duck    "
+         << "\nAge:    " << getage() << " Days" << fixed << setprecision(3)
          << "\nWeight: " << getweight() << " Kg"
-         << "\nGender: " << getgender()
+         << "\nGender: " << getgender() << setprecision(2)
          << "\nPrice:  R$" << price();
 }

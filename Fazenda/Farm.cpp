@@ -20,7 +20,22 @@ Farm::~Farm() //Destructor
     cout << "\nGoodbye farm!" << endl;
 }
 
-void Farm::Add_toFarm(Type_Animal type) //Add an animal based on it's type to the farm's vector
+void Farm::SetArea(float area)
+{
+    if(area <= 0)
+    {
+        this->area = 500;
+    }
+
+    this->area = area;
+}
+
+void Farm::Add_toFarm(Animals* animal)
+{
+    farm.push_back(animal);
+}
+
+void Farm::Add_toFarmRDM(Type_Animal type) //Add an animal based on it's type to the farm's vector
 {
     farm.push_back(CreateAnimal(type));
 }
@@ -59,26 +74,52 @@ void Farm::print() //Print the Farm status;
          << "\nState: " << GetState() << fixed << setprecision(2)
          << "\nArea: " << GetArea() << "m²"
          << "\nNumber of animals: " << farm.size()
-         << "\nNumber of bulls: " << Bull::getn_bulls()
+         << "\n\nNumber of bulls: " << Bull::getn_bulls()
+         << "\nPrice of bulls: R$" << price_type(Type_Bull)
          << "\nNumber of pigs: " << Pig::getn_pigs()
+         << "\nPrice of pigs: R$" << price_type(Type_Pig)
          << "\nNumber of ducks: " << Duck::getn_ducks()
+         << "\nPrice of ducks: R$" << price_type(Type_Duck)
          << "\nNumber of chickens: " << Chicken::getn_chickens()
-         << "\nTotal price: R$" << total_price()
+         << "\nPrice of chickens: R$" << price_type(Type_Chicken)
+         << "\n\nTotal price: R$" << total_price()
          << "\nRevenue: R$" << revenue << endl;
 }
 
-void Farm::print_animal(int index) //Print the animal status by the index
+void Farm::print_animal(Type_Animal type ,int index) //Print the animal status by the index
 {
     if(farm.empty()) //If the Farm is empty there is nothing to print;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
+    if(index <= 0 || index > getn_animals_per_type(type))
+    {
+        cerr << "\nInvalid index value" << endl;
+        exit(EXIT_FAILURE);
+    }
 
-    farm[index]->print(); //Use the print method of the object by the pointer;
+    int i = 0;
+    int j = 0;
+    
+    while(i < farm.size())
+    {
+        if(farm[i]->gettype() == type)
+        {
+            if(j == index - 1)
+            {
+                cout << "\n\n" << index << "º ";
+                farm[i]->print(); //Use the print method of the object by the pointer;
+                break;
+            }
+
+            j++;
+        }
+        i++;
+    }
 }
 
-float Farm::total_price() const //Print the sum of all animal's price;
+float Farm::total_price() //Print the sum of all animal's price;
 {
     if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
@@ -86,7 +127,7 @@ float Farm::total_price() const //Print the sum of all animal's price;
         exit(EXIT_FAILURE);
     }
 
-    float price;
+    float price = 0;
 
     for(size_t i = 0; i < farm.size(); i++) 
     {
@@ -96,15 +137,58 @@ float Farm::total_price() const //Print the sum of all animal's price;
     return price;
 }
 
-float Farm::price(int index) const //Gives the price of one animal
+float Farm::price_animal(Type_Animal type, int index) //Gives the price of one animal
 {
     if(farm.empty()) //If the Farm is empty there is nothing to return;
     {
         cerr << "\nFarm is empty" << endl;
         exit(EXIT_FAILURE);
     }
+    if(index <= 0 || index > getn_animals_per_type(type))
+    {
+        cerr << "\nInvalid index value" << endl;
+        exit(EXIT_FAILURE);
+    }
 
-    return farm[index]->price();
+    int i = 0;
+    int j = 0;
+    
+    while(i < farm.size())
+    {
+        if(farm[i]->gettype() == type)
+        {
+            if(j == index - 1)
+            {
+                break;
+            }
+
+            j++;
+        }
+        i++;
+    }
+
+    return farm[i]->price();
+}
+
+float Farm::price_type(Type_Animal type) //Gives the price of all animals of one type specified;
+{
+    if(farm.empty()) //If the Farm is empty there is nothing to return;
+    {
+        cerr << "\nFarm is empty" << endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    float price = 0;
+
+    for(size_t i = 0; i < farm.size(); i++)
+    {
+        if(farm[i]->gettype() == type)
+        {
+            price += farm[i]->price(); //Gives the price of all current living animals
+        }
+    }
+
+    return price;
 }
 
 void Farm::Rm_fromFarm(int index) //Remove animals from the farm
@@ -155,6 +239,33 @@ void Farm::feed(int times) //Feed all the animals of the farm by a number of tim
     }
 }
 
+void Farm::feed_type(Type_Animal type, int times)
+{
+    if(farm.empty())
+    {
+        cerr << "\nFarm is empty" << endl;
+       exit(EXIT_FAILURE);
+    }
+
+    for(int i = 0; i < times; i++)
+    for(size_t j = 0; j < farm.size(); j++)
+    {
+        if(farm[j]->gettype() == type)
+        {
+            farm[j]->eat();
+
+            if(farm[j]->getoverweight())
+            {
+                revenue += farm[j]->price(); //Return the price of the animals killed
+
+                delete farm[j];
+                farm.erase(farm.begin() + j);
+                j--;
+            }
+        }
+    }
+
+}
 void Farm::displacement(int times) //Calls the displacement function X times so the animals can move
 {
     if(farm.empty())
@@ -176,4 +287,27 @@ void Farm::setPrice_kg(float bull, float pig, float duck, float chicken) //Set t
     Pig::setprice_kg(pig);
     Duck::setprice_kg(duck);
     Chicken::setprice_kg(chicken);
+}
+
+int Farm::getn_animals_per_type(Type_Animal type)
+{
+    switch(type)
+        {
+        case Type_Animal::Type_Bull:
+            return Bull::getn_bulls();   
+            break;
+
+        case Type_Animal::Type_Pig:
+            return Pig::getn_pigs();
+            break;
+        
+        case Type_Animal::Type_Duck:
+            return Duck::getn_ducks();
+            break;
+        
+        default:
+            return Chicken::getn_chickens();
+            break;
+    }
+
 }

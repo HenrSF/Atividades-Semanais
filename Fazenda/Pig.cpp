@@ -15,7 +15,7 @@ string cry = "OINC OINC!"; //Onomatopoeia (portuguese - BR)
 }
 
 Pig::Pig(Gender gender, float weight, int age)
-    : Animals (gender)
+    : Animals (gender, Type_Pig)
 {
     
     setweight(weight);
@@ -88,9 +88,9 @@ void Pig::setage(int n)
 void Pig::print()
 {
 
-    cout << "\n\nPig   "
-         << "\nAge:    " << getage() << " Months" << fixed << setprecision(2)
+    cout << "Pig   "
+         << "\nAge:    " << getage() << " Months" << fixed << setprecision(3)
          << "\nWeight: " << getweight() << " Kg"
-         << "\nGender: " << getgender()
+         << "\nGender: " << getgender() << setprecision(2)
          << "\nPrice:  R$" << price();
 }

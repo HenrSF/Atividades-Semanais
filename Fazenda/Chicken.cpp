@@ -14,7 +14,7 @@ string cry = "CÓ CÓ!"; //Onomatopoeia (portuguese - BR)
 }
 
 Chicken::Chicken(Gender gender, float weight, int age)
-    : Animals (gender)
+    : Animals (gender, Type_Chicken)
 {
     
     setweight(weight);
@@ -86,9 +86,9 @@ void Chicken::setage(int n)
 }
 void Chicken::print()
 {
-    cout << "\n\nChicken "
-         << "\nAge:    " << getage() << " Days" << fixed << setprecision(2)
+    cout << "Chicken "
+         << "\nAge:    " << getage() << " Days" << fixed << setprecision(3)
          << "\nWeight: " << getweight() << " Kg"
-         << "\nGender: " << getgender()
+         << "\nGender: " << getgender() << setprecision(2)
          << "\nPrice:  R$" << price();
 }

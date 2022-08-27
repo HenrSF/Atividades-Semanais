@@ -20,24 +20,28 @@ class Farm
         Farm(string city, string state, float area); //Constructor;
         ~Farm(); //Destructor;
 
-        //Condition of empty vector;
-        void Add_toFarm(Type_Animal type); //Add a new animal to the Farm;
-        
-        void print();                      //Print the Farm status;
-        
-        void print_animal(int index);      //Print the Animal status;
-        
-        float total_price() const;         //Print the current price of all animals together;
-        
-        float price(int index) const;      //Print the current price of one animal; This method doesn't add the animal's price to the revenue
-        
-        void Rm_fromFarm(int index);       //Remove an animal from the Farm; This method doesn't add the animal's price to the revenue 
+        void Add_toFarm(Animals* animal);
 
+        void Add_toFarmRDM(Type_Animal type); //Add a new animal to the Farm, with random atributes;
         
-        void clear_farm();                 //Clear the Farm, this method n
+        void print();                         //Print the Farm status;
+        
+        void print_animal(Type_Animal type, int index);         //Print the Animal status;
+        
+        float total_price();            //Print the current price of all animals together;
+        
+        float price_animal(Type_Animal type, int index);         //Print the current price of one animal;
+        
+        float price_type(Type_Animal type); //Print the current price of all animals
+        
+        void Rm_fromFarm(int index);          //Remove an animal from the Farm; This method doesn't add the animal's price to the revenue 
+
+        void clear_farm();                 //Clear the Farm; This method doesn't add the animal's price to the revenue
         
         void feed(int times);              //Feed all animals in the Farm; if overweight, the animal is killed and it's price is added to the revenue
         
+        void feed_type(Type_Animal type, int times); //Feed all animals of one type in the Farm; if overweight, the animal is killed and it's price is added to the revenue
+
         void displacement(int times);      //Displace all animals in the Farm;
 
         //Getters
@@ -47,7 +51,9 @@ class Farm
         
         float GetArea() const {return area;}
         
-        int getn_animals() const {return farm.size();}
+        int getn_animals() {return farm.size();}
+
+        int getn_animals_per_type(Type_Animal type);
         
 
         //Setters
@@ -55,13 +61,13 @@ class Farm
         
         void SetState(string state) {this->state = state;}
         
-        void SetArea(float area) {this->area = area;}
+        void SetArea(float area);
         
         void setPrice_kg(float bull, float pig, float duck, float chicken); //Price per kg for each animal;
 
     private:
 
-        vector <Animals *> farm;
+        vector <Animals *> farm; //Vector of animals using polimorphism;
         string city;
         string state;
         float area;

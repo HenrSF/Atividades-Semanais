@@ -1,7 +1,7 @@
 
 #include "Animals.hpp"
 
-Animals::Animals(Gender gender) //using a pointer to give an animal a gender
+Animals::Animals(Gender gender, Type_Animal type) //using a pointer to give an animal a gender
 {
     if(gender == Gender::Male)
     this->gender = "Male";
@@ -10,6 +10,8 @@ Animals::Animals(Gender gender) //using a pointer to give an animal a gender
     this->gender = "Female";
 
     overweight = false;
+
+    signature = type;
 }
 
 Animals::~Animals()
