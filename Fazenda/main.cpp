@@ -7,10 +7,6 @@ int main()
 {
     srand(time(NULL));
 
-    //fstream archive;
-
-    //archive.open("farm.csv", fstream::in|fstream::out|fstream::trunc);
-
     Farm farm ("city", "state", 50);
 
     for (int i = 0; i < 5; i++)
