@@ -1,28 +1,35 @@
+
 #include "Animals.hpp"
 
-string Animals::sound(string cry)
+Animals::Animals(Gender gender, Type_Animal type) //using a pointer to give an animal a gender
 {
-    //return cry;
+    if(gender == Gender::Male)
+    this->gender = "Male";
+
+    else
+    this->gender = "Female";
+
+    overweight = false;
+
+    signature = type;
 }
-float Animals::mass()
+
+Animals::~Animals()
 {
-    /*if(displacement() == true)
-    {
-        return weight; //weight * rate of loss
-    }
-    else return weight;
-    */
+
 }
-bool Animals::displacement()
-{   
-    //return true;    
-}
-float Animals::eat()
+
+void Animals::setage(int n)
 {
-    //if(weight < x )
-    //return weight; //weight + rate of gain
+      age = n;  
 }
-float Animals::price()
+
+void Animals::setweight(float n)
 {
-    //return weight * 10; 
+    weight = n;
+}
+
+void Animals::setoverweight()
+{
+    overweight = true;
 }

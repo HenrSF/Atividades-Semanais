@@ -1,50 +1,95 @@
 #include "Bull.hpp"
 
-string Bull::sound()
+float Bull::price_kg;
+int Bull::n_bulls;
+
+namespace BULL
 {
-    return "muu!";
+float min_weight = 300;
+float max_weight = 600;
+int max_age = 18;   //Months
+float food = 5;     //Amount (kg) of weight this animal can gain
+float weight_loss = 0.004; //Weight loss in percentage of the current weight of the animal
+string cry = "MUUUU!"; //Onomatopoeia (portuguese - BR)
 }
-bool Bull::displacement()
+
+Bull::Bull(Gender gender, float weight, int age) //constructor
+    : Animals (gender, Type_Bull)
 {
-    if (displacement() == true)
-    {
-        return false;
-    }
+    setweight(weight);
+    setage(age);
     
-    else return true;
+    n_bulls++;
 }
 
-int Bull::get_weight() const
-{   
-    if(weight != 0) return weight;
-}
-
-void Bull::set_weight(int bw)
+Bull::~Bull() //destructor
 {
-    weight = bw;
+    n_bulls--;
 }
 
-
-float Bull::mass()
+string Bull::sound() const
 {
-    if(displacement() == true)
+    return BULL::cry; 
+}
+
+void Bull::displacement() //everytime this function is called the animal will move a fixed distance.
+{
+    float w = getweight() - (getweight() * BULL::weight_loss); //the animal loses weight at a fixed amount
+
+    if(w <= BULL::min_weight) //the animal has a minimum weight value and it'll be set at 300 if any given value is below that
+    setweight(w);
+}
+
+void Bull::setweight(float w) 
+{
+    if (w > BULL::max_weight && w < BULL::min_weight) 
     {
-        return weight * 0,04;
+        Animals::setweight((BULL::max_weight + BULL::min_weight) / 2); //if the input value is invalid, it'll be set to have the mean between max and min values; 
     }
-    else return weight;
+
+    Animals::setweight(w);
+}
+
+ void Bull::setprice_kg(float kg)
+{
+    if(kg > 0) price_kg = kg;
+
+    else price_kg = 30; 
 }
 
 float Bull::price()
 {
-    return weight * 10;
+    return getweight() * price_kg; //returns the revenue of an animal
 }
 
-float Bull::eat()
+void Bull::eat()
 {
-    if(weight < 120) return weight + 5;
-    
-    if (weight + 5 > 120)
+    if(getweight() + BULL::food >= BULL::max_weight) //the animal's weight cannot be above the maximum 
     {
-        return 120;
+        setoverweight();
     }
+
+    else
+    {
+        setweight(getweight() + BULL::food); //the animal gain a fixed amount of weight
+    }
+}
+
+void Bull::setage(int n)
+{
+    if(n > 0 && n <= BULL::max_age) //the animal has a maximum age which is going to be considered when or not it'll be killed
+    {
+        Animals::setage(n);
+    }
+
+    else Animals::setage(1); //if the input value is an invalid one. The age will be 1 (month)
+}
+void Bull::print()
+{
+
+    cout << "Bull  "
+         << "\nAge:    " << getage() << " Months" << fixed << setprecision(3)
+         << "\nWeight: " << getweight() << " Kg"
+         << "\nGender: " << getgender() << setprecision(2)
+         << "\nPrice:  R$" << price();
 }
