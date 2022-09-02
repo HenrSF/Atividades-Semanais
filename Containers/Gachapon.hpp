@@ -8,10 +8,10 @@ using namespace std;
 
 enum rarity
 {
-    common, uncommon, rare, super_rare, ultra_rare // 55, 30, 10, 4, 1;
+    common, uncommon, rare, super_rare, ultra_rare
 };
 
-class Gachapon //if(common * 0.55)
+class Gachapon
 {
     public:
 
@@ -28,10 +28,10 @@ class Gachapon //if(common * 0.55)
 
     private:
 
-    stack <rarity> prize;
-    string name;
+    stack <rarity> prize; //Stack cointainer that receives rarity as a type
+    string name;         
 
-    void fill_machine(int quantity); //Fill the machine with each type of capsule and it's rarity
+    void fill_machine(int quantity); //Fill the gachapon with each type of capsule and it's rarity
 
     
 };

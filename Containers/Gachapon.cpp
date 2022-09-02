@@ -1,14 +1,13 @@
 #include "Gachapon.hpp"
 #include <random>
 
-namespace P //probability
+namespace P //Probability in percentage
 {
     int common = 55;
     int uncommon = 30;
     int rare = 10;
     int super_rare = 4;
-    int ultra_rare =  1;
-    
+    int ultra_rare =  1;   
 }
 
 Gachapon::Gachapon(string name, int quantity) //Constructor
@@ -24,9 +23,9 @@ Gachapon::Gachapon(string name, int quantity) //Constructor
     fill_machine(quantity);
 }
 
-Gachapon::~Gachapon()
+Gachapon::~Gachapon() //Destructor
 {
-    while(!prize.empty())
+    while(!prize.empty()) //Clearing the stack
     {
         prize.pop();
     }
@@ -36,11 +35,12 @@ Gachapon::~Gachapon()
 
 void Gachapon::fill_machine(int quantity) //Fill the machine with each type of capsule and it's rarity
 {
-    while (prize.size() < quantity)
+    while (prize.size() < quantity) //Calls the push function until it's reach the parameter quantity
     {
-        int r = rand() % 100 + 1;
+        int r = rand() % 100 + 1; //RNG between 1 ~ 100
 
-        if (r <= P::ultra_rare)
+        //The odds are defined as the partial sum of each individual rarity
+        if (r <= P::ultra_rare) 
         {
             prize.push(ultra_rare);
         }
@@ -68,11 +68,11 @@ void Gachapon::fill_machine(int quantity) //Fill the machine with each type of c
     
 }
 
-void Gachapon::pull(int ticket) //Remove the top capsule and tells it's rarity;
+void Gachapon::pull(int ticket) //Remove the top capsule (until tickets > 0) and tells it's rarity;
 {
     while(ticket > 0)
     {
-    
+        //Checks the rarity of the top element and removes it;
         if(prize.top() == common)
         {
             cout << "\nYou pulled a common capsule." << endl;

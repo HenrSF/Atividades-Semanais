@@ -6,7 +6,7 @@ int main()
 
     Gachapon gacha("Pokémon", 20);
 
-    gacha.pull(5);
+    gacha.pull(6);
 
     return 0;
 }
